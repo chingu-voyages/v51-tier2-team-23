@@ -35,7 +35,7 @@ your repo access and to practice PR'ing with your team *before* you start
 coding!
 
 - Emily Morgan: https://github.com/EMorganLND / www.linkedin.com/in/emilym54321
-- Teammate name #2: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
+- Anas Charkaoui : [GitHub](https://github.com/charkaoui007) / [LinkedIn](https://linkedin.com/in/liaccountname)
 
    ...
 - Teammate name #n: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)

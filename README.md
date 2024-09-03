@@ -36,6 +36,6 @@ coding!
 
 - Emily Morgan: https://github.com/EMorganLND / www.linkedin.com/in/emilym54321
 - Anas Charkaoui : [GitHub](https://github.com/charkaoui007) / [LinkedIn](https://linkedin.com/in/liaccountname)
-
+- Evaristo : [Github](https://github.com/evaristoc) / [LinkedIn](https://www.linkedin.com/in/evaristocaraballo/)
    ...
 - Teammate name #n: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)

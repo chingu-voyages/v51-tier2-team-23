@@ -39,3 +39,4 @@ coding!
 - Evaristo : [Github](https://github.com/evaristoc) / [LinkedIn](https://www.linkedin.com/in/evaristocaraballo/)
 - Helder: [Github](https://github.com/helfer1991) / [LinkedIn](https://www.linkedin.com/in/helder-ferreira-00299110b/)
 - Teammate name #n: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
+- Evans Asiedu: [Github](https://github.com/Evans-Asiedu) / [LinkedIn](www.linkedin.com/in/evans-kesse-asiedu)

@@ -1,3 +1,32 @@
+# Splitty / SplitIt
+
+**Overview**
+As part of Voyage 51 our team are creating an Expenses Splitter app to allow friends, families and groups to easily split and track expenses.
+
+**Features**
+As a Tier 2 group, we have been given some key features to include and we think the following are must-haves:
+  
+  a. Landing page with quick links.
+  
+  b. Ability to manage multiple groups.
+
+  c. A split calculator.
+
+**To Do List**
+Here are the features we want to add to our app:
+
+a. Exporting group data from the app in PDF or Excel format.
+
+b. Create visuals on the spending trends of the group members.
+
+**Our Team / Contibutors**
+- Emily Morgan: [GitHub](https://github.com/EMorganLND) / [LinkedIn](www.linkedin.com/in/emilym54321)
+- Anas Charkaoui : [GitHub](https://github.com/charkaoui007) / [LinkedIn](https://linkedin.com/in/liaccountname)
+- Evaristo : [Github](https://github.com/evaristoc) / [LinkedIn](https://www.linkedin.com/in/evaristocaraballo/)
+- Helder: [Github](https://github.com/helfer1991) / [LinkedIn](https://www.linkedin.com/in/helder-ferreira-00299110b/)
+- Evans Asiedu: [Github](https://github.com/Evans-Asiedu) / [LinkedIn](https://www.linkedin.com/in/evans-kesse-asiedu/)
+- Teammate name #n: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
+
 # voyage-tasks
 
 Your project's `readme` is as important to success as your code. For
@@ -27,16 +56,4 @@ Meeting Agenda templates (located in the `/docs` directory in this repo):
 - Meeting - Sprint Retrospective, Review, and Planning --> ./docs/meeting-sprint_retrospective_review_and_planning.docx
 - Meeting - Sprint Open Topic Session --> ./docs/meeting-sprint_open_topic_session.docx
 
-## Our Team
 
-Everyone on your team should add their name along with a link to their GitHub
-& optionally their LinkedIn profiles below. Do this in Sprint #1 to validate
-your repo access and to practice PR'ing with your team _before_ you start
-coding!
-
-- Emily Morgan: [GitHub](https://github.com/EMorganLND) / [LinkedIn](www.linkedin.com/in/emilym54321)
-- Anas Charkaoui : [GitHub](https://github.com/charkaoui007) / [LinkedIn](https://linkedin.com/in/liaccountname)
-- Evaristo : [Github](https://github.com/evaristoc) / [LinkedIn](https://www.linkedin.com/in/evaristocaraballo/)
-- Helder: [Github](https://github.com/helfer1991) / [LinkedIn](https://www.linkedin.com/in/helder-ferreira-00299110b/)
-- Teammate name #n: [GitHub](https://github.com/ghaccountname) / [LinkedIn](https://linkedin.com/in/liaccountname)
-- Evans Asiedu: [Github](https://github.com/Evans-Asiedu) / [LinkedIn](https://www.linkedin.com/in/evans-kesse-asiedu/)

@@ -1,4 +1,4 @@
-# Splitty / SplitIt
+# Expenses Splitter app
 
 **Overview**
 As part of Voyage 51 our team are creating an Expenses Splitter app to allow friends, families and groups to easily split and track expenses.
@@ -6,14 +6,18 @@ As part of Voyage 51 our team are creating an Expenses Splitter app to allow fri
 **Features**
 As a Tier 2 group, we have been given some key features to include and we think the following are must-haves:
   
-  a. Landing page with quick links.
-  
-  b. Ability to manage multiple groups.
+  a. A split calculator
 
-  c. A split calculator.
+  b. Homepage with link to create new group.
+
+  c. User can add participants quickly using just their name to an expense.
+
+  d. The app will automatically caluclate certain fields based on data input by the user.
+
+  There are more must haves and should haves in the App Feature Planning document here: [https://tier2team23.atlassian.net/l/cp/nMF1JU3s]
 
 **To Do List**
-Here are the features we want to add to our app:
+Here are the features we want to add to our app in the future:
 
 a. Exporting group data from the app in PDF or Excel format.
 

@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import "./App.css";
+import ParticipantsList from "./components/participantslist";
 
 class App extends Component {
   render() {
     return (
-      <main>
-        <h1>Hello</h1>
+      <main className="container">
+        <ParticipantsList />
       </main>
     );
   }

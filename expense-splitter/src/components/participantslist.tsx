@@ -82,16 +82,24 @@ const groupData: Group = {
 class ParticipantsList extends Component<{}> {
   state = {
     participants: [] as Participant[],
+    admin: {} as Participant,
   };
 
   componentDidMount(): void {
-    const participants = groupData.participants;
-    this.setState({ participants });
+    const { participants, admin } = groupData;
+    this.setState({ participants, admin });
   }
 
+  renderBudgetStatus = (status: string): string => {
+    let classname = "badge badge--small";
+    if (status === "behind") classname += " badge--primary";
+    else classname += " badge--secondary";
+
+    return classname;
+  };
+
   render(): ReactNode {
-    const { participants } = this.state;
-    console.log(participants);
+    const { participants, admin } = this.state;
 
     return (
       <ul className="list">
@@ -107,8 +115,14 @@ class ParticipantsList extends Component<{}> {
                 <div className="media__title">
                   <div>
                     <span className="heading">{participant.name}</span>
-                    <span className="badge badge--small badge--accent">
-                      You
+                    <span
+                      className={
+                        participant.name === admin.name
+                          ? "badge badge--small badge--accent"
+                          : ""
+                      }
+                    >
+                      {participant.name === admin.name ? "You" : ""}
                     </span>
                   </div>
                   <span className="badge badge--accent">
@@ -118,7 +132,11 @@ class ParticipantsList extends Component<{}> {
                 <div className="media__text">
                   <div>
                     <span className="text">${participant.allocation}</span>
-                    <span className="badge badge--small badge--primary">
+                    <span
+                      className={this.renderBudgetStatus(
+                        participant.budgetStatus
+                      )}
+                    >
                       {participant.budgetStatus}
                     </span>
                   </div>

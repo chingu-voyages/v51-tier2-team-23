@@ -6,7 +6,7 @@ type Participant = {
   name: string;
   email: string;
   allocation: number;
-  dateAdded: string;
+  dateAdded: Date;
   budgetStatus: "onTrack" | "behind";
 };
 
@@ -14,12 +14,12 @@ type Participant = {
 type Group = {
   name: string;
   totalExpenses: number;
-  createdAt: string;
+  createdAt: Date;
   participants: Participant[];
   user: {
     id: number;
     name: string;
-    dateAdded: string;
+    dateAdded: Date;
     allocation: number;
   };
   admin: {
@@ -32,14 +32,14 @@ type Group = {
 const groupData: Group = {
   name: "New Zealand Trip",
   totalExpenses: 1000,
-  createdAt: "2024-09-22",
+  createdAt: new Date("2024-09-22"),
   participants: [
     {
       id: 1,
       name: "Aaron",
       email: "aaron@example.com",
       allocation: 250,
-      dateAdded: "2024-09-22",
+      dateAdded: new Date("2024-09-22"),
       budgetStatus: "onTrack",
     },
     {
@@ -47,7 +47,7 @@ const groupData: Group = {
       name: "Bran",
       email: "bran@example.com",
       allocation: 250,
-      dateAdded: "2024-09-22",
+      dateAdded: new Date("2024-09-22"),
       budgetStatus: "behind",
     },
     {
@@ -55,7 +55,7 @@ const groupData: Group = {
       name: "Cassy",
       email: "cassy@example.com",
       allocation: 250,
-      dateAdded: "2024-09-22",
+      dateAdded: new Date("2024-09-22"),
       budgetStatus: "onTrack",
     },
     {
@@ -63,7 +63,7 @@ const groupData: Group = {
       name: "Diana",
       email: "diana@example.com",
       allocation: 250,
-      dateAdded: "2024-09-22",
+      dateAdded: new Date("2024-09-22"),
       budgetStatus: "behind",
     },
   ],
@@ -74,7 +74,7 @@ const groupData: Group = {
   user: {
     id: 1,
     name: "Aaron",
-    dateAdded: "2024-09-22",
+    dateAdded: new Date("2024-09-22"),
     allocation: 250,
   },
 };
@@ -140,7 +140,13 @@ class ParticipantsList extends Component<{}> {
                       {participant.budgetStatus}
                     </span>
                   </div>
-                  <span className="date">{participant.dateAdded}</span>
+                  <span className="date">
+                    {participant.dateAdded.toLocaleDateString("en-GB", {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    })}
+                  </span>
                 </div>
               </div>
             </div>

@@ -6,8 +6,9 @@ type Participant = {
   name: string;
   email: string;
   allocation: number;
+  contribution: number;
   dateAdded: Date;
-  budgetStatus: "onTrack" | "behind";
+  numberOfExpenses: number;
 };
 
 // Mock definition of type Group
@@ -15,12 +16,14 @@ type Group = {
   name: string;
   totalExpenses: number;
   createdAt: Date;
+  numberOfExpenses: number;
   participants: Participant[];
   user: {
     id: number;
     name: string;
     dateAdded: Date;
     allocation: number;
+    contribution: number;
   };
   admin: {
     id: number;
@@ -33,38 +36,43 @@ const groupData: Group = {
   name: "New Zealand Trip",
   totalExpenses: 1000,
   createdAt: new Date("2024-09-22"),
+  numberOfExpenses: 4,
   participants: [
     {
       id: 1,
       name: "Aaron",
       email: "aaron@example.com",
       allocation: 250,
+      contribution: 300,
       dateAdded: new Date("2024-09-22"),
-      budgetStatus: "onTrack",
+      numberOfExpenses: 1,
     },
     {
       id: 2,
       name: "Bran",
       email: "bran@example.com",
       allocation: 250,
+      contribution: 100,
       dateAdded: new Date("2024-09-22"),
-      budgetStatus: "behind",
+      numberOfExpenses: 2,
     },
     {
       id: 3,
       name: "Cassy",
       email: "cassy@example.com",
       allocation: 250,
+      contribution: 100,
       dateAdded: new Date("2024-09-22"),
-      budgetStatus: "onTrack",
+      numberOfExpenses: 2,
     },
     {
       id: 4,
       name: "Diana",
       email: "diana@example.com",
       allocation: 250,
+      contribution: 250,
       dateAdded: new Date("2024-09-22"),
-      budgetStatus: "behind",
+      numberOfExpenses: 3,
     },
   ],
   admin: {
@@ -76,6 +84,7 @@ const groupData: Group = {
     name: "Aaron",
     dateAdded: new Date("2024-09-22"),
     allocation: 250,
+    contribution: 100,
   },
 };
 
@@ -90,12 +99,19 @@ class ParticipantsList extends Component<{}> {
     this.setState({ participants, admin });
   }
 
-  renderBudgetStatus = (status: string): string => {
+  renderBudgetStatusBadge = (participant: Participant): string => {
+    let status = this.renderBudgetStatus(participant);
     let classname = "badge badge--small";
     if (status === "behind") classname += " badge--primary";
     else classname += " badge--secondary";
 
     return classname;
+  };
+
+  renderBudgetStatus = ({ allocation, contribution }: Participant): string => {
+    const value = allocation - contribution;
+    if (value <= 0) return "onTrack";
+    return "behind";
   };
 
   render(): ReactNode {
@@ -131,13 +147,12 @@ class ParticipantsList extends Component<{}> {
                 </div>
                 <div className="media__text">
                   <div>
+                    <span className="text">
+                      {participant.numberOfExpenses} expenses
+                    </span>
                     <span className="text">${participant.allocation}</span>
-                    <span
-                      className={this.renderBudgetStatus(
-                        participant.budgetStatus
-                      )}
-                    >
-                      {participant.budgetStatus}
+                    <span className={this.renderBudgetStatusBadge(participant)}>
+                      {this.renderBudgetStatus(participant)}
                     </span>
                   </div>
                   <span className="date">

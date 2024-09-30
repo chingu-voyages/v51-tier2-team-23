@@ -1,4 +1,5 @@
 import React, { Component, ReactNode } from "react";
+import SortButton from "./sortButton";
 
 // Mock defintion of type Participant
 type Participant = {
@@ -40,27 +41,28 @@ const groupData: Group = {
   participants: [
     {
       id: 1,
-      name: "Aaron",
-      email: "aaron@example.com",
-      allocation: 250,
-      contribution: 300,
-      dateAdded: new Date("2024-09-22"),
-      numberOfExpenses: 1,
-    },
-    {
-      id: 2,
       name: "Bran",
       email: "bran@example.com",
       allocation: 250,
-      contribution: 100,
-      dateAdded: new Date("2024-09-22"),
+      contribution: 300,
+      dateAdded: new Date("2024-09-15"),
       numberOfExpenses: 2,
     },
     {
+      id: 2,
+      name: "Aaron",
+      email: "aaron@example.com",
+      allocation: 500,
+      contribution: 300,
+      dateAdded: new Date("2024-09-26"),
+      numberOfExpenses: 1,
+    },
+
+    {
       id: 3,
-      name: "Cassy",
+      name: "Hassy",
       email: "cassy@example.com",
-      allocation: 250,
+      allocation: 700,
       contribution: 100,
       dateAdded: new Date("2024-09-22"),
       numberOfExpenses: 2,
@@ -69,9 +71,9 @@ const groupData: Group = {
       id: 4,
       name: "Diana",
       email: "diana@example.com",
-      allocation: 250,
+      allocation: 900,
       contribution: 250,
-      dateAdded: new Date("2024-09-22"),
+      dateAdded: new Date("2024-09-12"),
       numberOfExpenses: 3,
     },
   ],
@@ -92,10 +94,12 @@ class ParticipantsList extends Component<{}> {
   state = {
     participants: [] as Participant[],
     admin: {} as Participant,
+    sortOption: "name",
   };
 
   componentDidMount(): void {
     const { participants, admin } = groupData;
+    participants.sort((a, b) => a.name.localeCompare(b.name));
     this.setState({ participants, admin });
   }
 
@@ -114,60 +118,83 @@ class ParticipantsList extends Component<{}> {
     return "behind";
   };
 
+  handleSort = (sortOption: String) => {
+    let sortedParticipants = [...this.state.participants];
+
+    if (sortOption === "budget") {
+      sortedParticipants.sort((a, b) => b.allocation - a.allocation);
+    } else if (sortOption === "name") {
+      sortedParticipants.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortOption === "dateAdded") {
+      sortedParticipants.sort((a, b) => {
+        const dateA = a.dateAdded.getDate();
+        const dateB = b.dateAdded.getDate();
+        return dateA - dateB;
+      });
+    }
+
+    this.setState({ participants: sortedParticipants, sortOption });
+  };
+
   render(): ReactNode {
-    const { participants, admin } = this.state;
+    const { participants, admin, sortOption } = this.state;
 
     return (
-      <ul className="list">
-        {participants.map((participant) => (
-          <li key={participant.id}>
-            <div className="media">
-              <img
-                className="media__image"
-                src="https://media.istockphoto.com/id/1437816897/photo/business-woman-manager-or-human-resources-portrait-for-career-success-company-we-are-hiring.jpg?s=1024x1024&w=is&k=20&c=iGtRKCTRSvPVl3eOIpzzse5SvQFfImkV0TZuFh-74ps="
-                alt="PF"
-              />
-              <div className="media__body">
-                <div className="media__title">
-                  <div>
-                    <span className="heading">{participant.name}</span>
-                    <span
-                      className={
-                        participant.name === admin.name
-                          ? "badge badge--small badge--accent"
-                          : ""
-                      }
-                    >
-                      {participant.name === admin.name ? "You" : ""}
+      <>
+        <SortButton value={sortOption} onChange={this.handleSort} />
+        <ul className="list">
+          {participants.map((participant) => (
+            <li key={participant.id}>
+              <div className="media">
+                <img
+                  className="media__image"
+                  src="https://media.istockphoto.com/id/1437816897/photo/business-woman-manager-or-human-resources-portrait-for-career-success-company-we-are-hiring.jpg?s=1024x1024&w=is&k=20&c=iGtRKCTRSvPVl3eOIpzzse5SvQFfImkV0TZuFh-74ps="
+                  alt="PF"
+                />
+                <div className="media__body">
+                  <div className="media__title">
+                    <div>
+                      <span className="heading">{participant.name}</span>
+                      <span
+                        className={
+                          participant.name === admin.name
+                            ? "badge badge--small badge--accent"
+                            : ""
+                        }
+                      >
+                        {participant.name === admin.name ? "You" : ""}
+                      </span>
+                    </div>
+                    <span className="badge badge--accent">
+                      {participant.email}
                     </span>
                   </div>
-                  <span className="badge badge--accent">
-                    {participant.email}
-                  </span>
-                </div>
-                <div className="media__text">
-                  <div>
-                    <span className="text">
-                      {participant.numberOfExpenses} expenses
-                    </span>
-                    <span className="text">${participant.allocation}</span>
-                    <span className={this.renderBudgetStatusBadge(participant)}>
-                      {this.renderBudgetStatus(participant)}
+                  <div className="media__text">
+                    <div>
+                      <span className="text">
+                        {participant.numberOfExpenses} expenses
+                      </span>
+                      <span className="text">${participant.allocation}</span>
+                      <span
+                        className={this.renderBudgetStatusBadge(participant)}
+                      >
+                        {this.renderBudgetStatus(participant)}
+                      </span>
+                    </div>
+                    <span className="date">
+                      {participant.dateAdded.toLocaleDateString("en-GB", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                      })}
                     </span>
                   </div>
-                  <span className="date">
-                    {participant.dateAdded.toLocaleDateString("en-GB", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "numeric",
-                    })}
-                  </span>
                 </div>
               </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      </>
     );
   }
 }

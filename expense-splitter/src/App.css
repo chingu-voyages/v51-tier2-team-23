@@ -77,3 +77,16 @@
 .badge--accent {
   background-color: #e8edf2;
 }
+
+/* sort button */
+.sort-btn {
+  border-radius: 12px;
+  font-size: 1.4rem;
+  padding: 5px 8px;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+.sort-btn--label {
+  font-size: 1.4rem;
+  padding: 5px 8px;
+}

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ParticipantsList from "./participantslist";
 import SortButton from "./sortButton";
 import Header from "./header";
+import Button from "./button";
 
 // Mock defintion of type Participant
 type Participant = {
@@ -155,6 +156,18 @@ class GroupDetails extends Component<{}> {
           budgetStatus={this.renderBudgetStatus}
           budgetStatusBadge={this.renderBudgetStatusBadge}
         />
+        <div className="footer">
+          <Button
+            name="Add Participant"
+            onButtonClick={() => {}}
+            className="btn"
+          />
+          <Button
+            name="Settle up"
+            onButtonClick={() => {}}
+            className="btn btn--primary"
+          />
+        </div>
       </>
     );
   }

@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import "./App.css";
-import ParticipantsList from "./components/participantslist";
+import GroupDetails from "./components/groupdetails";
 
 class App extends Component {
   render() {
     return (
       <main className="container">
-        <ParticipantsList />
+        <GroupDetails />
       </main>
     );
   }

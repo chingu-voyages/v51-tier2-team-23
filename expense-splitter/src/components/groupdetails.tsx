@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import ParticipantsList from "./participantslist";
+import SortButton from "./sortButton";
+import Header from "./header";
 
 // Mock defintion of type Participant
 type Participant = {
@@ -137,14 +139,23 @@ class GroupDetails extends Component<{}> {
   };
 
   render() {
-    const { participants, admin } = this.state;
+    const { name, createdAt } = groupData;
+    const { participants, admin, sortOption } = this.state;
     return (
-      <ParticipantsList
-        participants={participants}
-        admin={admin}
-        budgetStatus={this.renderBudgetStatus}
-        budgetStatusBadge={this.renderBudgetStatusBadge}
-      />
+      <>
+        <Header
+          name={name}
+          date={createdAt.toLocaleDateString()}
+          onButtonClick={() => {}}
+        />
+        <SortButton onChange={this.handleSort} value={sortOption} />
+        <ParticipantsList
+          participants={participants}
+          admin={admin}
+          budgetStatus={this.renderBudgetStatus}
+          budgetStatusBadge={this.renderBudgetStatusBadge}
+        />
+      </>
     );
   }
 }

@@ -9,6 +9,30 @@
   padding-left: 0;
 }
 
+.list--inline .list__item {
+  display: inline-block;
+  margin-right: 1rem;
+  font-size: 1.4rem;
+}
+
+/* Button */
+.btn {
+  border: 0;
+  border-radius: 10px;
+  text-align: center;
+  white-space: nowrap;
+  padding: 0px 16px;
+  height: 32px;
+  background-color: #e8edf2;
+  font-weight: 500;
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+
+.btn--primary {
+  background-color: #2985e5;
+}
+
 /* media component */
 .media {
   height: 7.2rem;
@@ -89,4 +113,15 @@
 .sort-btn--label {
   font-size: 1.4rem;
   padding: 5px 8px;
+}
+
+/* Group details */
+.header .title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header .description {
+  margin-top: 3rem;
 }

@@ -5,9 +5,17 @@ interface Props {
   name: string;
   date: string;
   onButtonClick: Function;
+  totalExpenses: number;
+  numberOfParticipants: number;
 }
 
-const Header: React.FC<Props> = ({ name, date, onButtonClick }) => {
+const Header: React.FC<Props> = ({
+  name,
+  date,
+  onButtonClick,
+  totalExpenses,
+  numberOfParticipants,
+}) => {
   return (
     <div className="header">
       <div className="title">
@@ -25,8 +33,8 @@ const Header: React.FC<Props> = ({ name, date, onButtonClick }) => {
         <h3>Group description</h3>
         <div>
           <ul className="list list--inline">
-            <li className="list__item">7 people</li>
-            <li className="list__item">$5,0000</li>
+            <li className="list__item">{numberOfParticipants} people</li>
+            <li className="list__item">${totalExpenses}</li>
           </ul>
         </div>
       </div>

@@ -140,7 +140,7 @@ class GroupDetails extends Component<{}> {
   };
 
   render() {
-    const { name, createdAt } = groupData;
+    const { name, createdAt, totalExpenses } = groupData;
     const { participants, admin, sortOption } = this.state;
     return (
       <>
@@ -148,6 +148,8 @@ class GroupDetails extends Component<{}> {
           name={name}
           date={createdAt.toLocaleDateString()}
           onButtonClick={() => {}}
+          totalExpenses={totalExpenses}
+          numberOfParticipants={participants.length}
         />
         <SortButton onChange={this.handleSort} value={sortOption} />
         <ParticipantsList

@@ -3,6 +3,7 @@ import ParticipantsList from "./participantslist";
 import SortButton from "./sortButton";
 import Header from "./header";
 import Button from "./button";
+import TabButtons from "./tabButtons";
 
 // Mock defintion of type Participant
 type Participant = {
@@ -98,6 +99,7 @@ class GroupDetails extends Component<{}> {
     participants: [] as Participant[],
     admin: {} as Participant,
     sortOption: "name",
+    activeTab: "tab1",
   };
 
   componentDidMount(): void {
@@ -139,9 +141,13 @@ class GroupDetails extends Component<{}> {
     this.setState({ participants: sortedParticipants, sortOption });
   };
 
+  changeTab = (tabName: string) => {
+    this.setState({ activeTab: tabName });
+  };
+
   render() {
     const { name, createdAt, totalExpenses } = groupData;
-    const { participants, admin, sortOption } = this.state;
+    const { participants, admin, sortOption, activeTab } = this.state;
     return (
       <>
         <Header
@@ -151,24 +157,41 @@ class GroupDetails extends Component<{}> {
           totalExpenses={totalExpenses}
           numberOfParticipants={participants.length}
         />
-        <SortButton onChange={this.handleSort} value={sortOption} />
-        <ParticipantsList
-          participants={participants}
-          admin={admin}
-          budgetStatus={this.renderBudgetStatus}
-          budgetStatusBadge={this.renderBudgetStatusBadge}
-        />
-        <div className="footer">
-          <Button
-            name="Add Participant"
-            onButtonClick={() => {}}
-            className="btn"
-          />
-          <Button
-            name="Settle up"
-            onButtonClick={() => {}}
-            className="btn btn--primary"
-          />
+        <TabButtons activeTab={activeTab} changeTab={this.changeTab} />
+        <div className="tab-content">
+          {activeTab === "tab1" && (
+            <div>
+              <SortButton onChange={this.handleSort} value={sortOption} />
+              <ParticipantsList
+                participants={participants}
+                admin={admin}
+                budgetStatus={this.renderBudgetStatus}
+                budgetStatusBadge={this.renderBudgetStatusBadge}
+              />
+              <div className="footer">
+                <Button
+                  name="Add Participant"
+                  onButtonClick={() => {}}
+                  className="btn"
+                />
+                <Button
+                  name="Settle up"
+                  onButtonClick={() => {}}
+                  className="btn btn--primary"
+                />
+              </div>
+            </div>
+          )}
+          {activeTab === "tab2" && (
+            <div>
+              <h3>Tab 2 Content</h3>{" "}
+            </div>
+          )}
+          {activeTab === "tab3" && (
+            <div>
+              <h3>Tab 3 Content</h3>
+            </div>
+          )}
         </div>
       </>
     );

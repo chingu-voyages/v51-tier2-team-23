@@ -106,9 +106,10 @@
 .sort-btn {
   border-radius: 12px;
   font-size: 1.4rem;
-  padding: 5px 8px;
+  padding: 4px 7px;
   margin-top: 1rem;
   cursor: pointer;
+  background-color: #e8edf2;
 }
 .sort-btn--label {
   font-size: 1.4rem;
@@ -131,4 +132,24 @@
   flex-direction: column;
   align-items: end;
   justify-content: space-around;
+}
+
+/* Tabs */
+.tab-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 5px;
+  margin-top: 2.5rem;
+}
+
+.tab-buttons .tab {
+  border: 1px solid #f7fafc;
+  background-color: #f7fafc;
+  color: #4f7396;
+  cursor: pointer;
+}
+
+.tab-buttons .active {
+  font-weight: bold;
+  color: black;
 }

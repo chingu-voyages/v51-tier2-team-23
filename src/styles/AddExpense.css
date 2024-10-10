@@ -1,0 +1,296 @@
+/* Import Poppins Font from Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif; /* Apply Poppins globally */
+}
+
+/* Body */
+body {
+  background-color: #f8fafc;
+  color: #0e141b;
+}
+
+/* Modal Overlay to cover the whole page */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Dark transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal container */
+.modal {
+  background-color: white;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 600px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow-y: auto; /* Scroll if content overflows */
+  max-height: 90vh; /* Limits the height */
+}
+
+/* Modal header with logo and close button */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0e141b;
+  margin-left: 8px;
+}
+
+/* Close button */
+.close-button {
+  font-size: 1.5rem;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  color: #0e141b;
+}
+
+/* Form title styling */
+.form-title {
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: #0e141b;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+/* Form groups styling */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+label {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #4f7396;
+}
+
+/* Form input fields, textareas, and select boxes */
+.input-field,
+.textarea-field,
+select {
+  padding: 12px; /* Increased padding for a more spacious feel */
+  font-size: 1rem;
+  border-radius: 6px; /* Slightly larger radius for a smoother appearance */
+  border: 1px solid #ddd;
+  width: 100%;
+  margin-top: 8px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+/* Input field focus state */
+.input-field:focus,
+.textarea-field:focus,
+select:focus {
+  border-color: #4f7396;
+  box-shadow: 0 0 8px rgba(79, 115, 150, 0.2); /* Subtle shadow on focus */
+}
+
+/* Textarea styling */
+.textarea-field {
+  resize: vertical;
+  min-height: 100px; /* Set minimum height for better usability */
+}
+
+/* Checkbox group styling */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: #0e141b;
+  font-weight: 400;
+}
+
+/* Checkbox Styling */
+.checkbox-input {
+  margin-right: 8px;
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #4f7396; /* Styling the checkbox tick color */
+  appearance: none; /* Reset default checkbox appearance */
+  border: 2px solid #ddd; /* Border for unchecked state */
+  border-radius: 4px; /* Rounded corners */
+  position: relative;
+  display: inline-block;
+  background-color: #fff;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.checkbox-input:checked {
+  background-color: #4f7396; /* Color when checked */
+  border-color: #4f7396; /* Border color when checked */
+}
+
+.checkbox-input:checked::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  display: block;
+}
+
+/* Participants section */
+.participants-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #0e141b;
+  margin-bottom: 16px;
+}
+
+/* Individual participant styling */
+.participant {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.participant-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+}
+
+.participant-info {
+  flex: 1;
+  margin-left: 12px;
+}
+
+.participant-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #0e141b;
+}
+
+.participant-contribution {
+  font-size: 0.875rem;
+  color: #4f7396;
+}
+
+/* Weight input field */
+.weight-input {
+  width: 60px;
+  padding: 8px; /* Increased padding for better alignment with other fields */
+  font-size: 0.875rem;
+  border-radius: 6px; /* Matching border radius for a unified style */
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+/* New participant input and button */
+.new-participant {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.add-participant-button {
+  background-color: #4f7396;
+  color: white;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.add-participant-button:hover {
+  background-color: #3d5b73;
+}
+
+/* Receipt upload section */
+.receipt-upload {
+  margin: 16px 0;
+}
+
+.receipt-title {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #0e141b;
+  margin-bottom: 8px;
+}
+
+.file-input {
+  padding: 10px; /* Enhanced padding */
+  border-radius: 6px; /* Matching radius for uniformity */
+  border: 1px solid #ddd;
+  width: 100%;
+}
+
+/* Add expense button styling */
+.add-expense-button {
+  background-color: #4f7396;
+  color: white;
+  padding: 10px 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  display: block;
+  margin: 16px auto 0 auto;
+  transition: background-color 0.2s;
+  width: 100%; /* Full width button */
+}
+
+.add-expense-button:hover {
+  background-color: #3d5b73;
+}
+
+/* Modal */
+
+/* Media Queries for Responsiveness */
+@media (max-width: 600px) {
+  .modal {
+    width: 95%; /* Adjust for smaller screens */
+    padding: 10px; /* Reduce padding */
+  }
+}

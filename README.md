@@ -41,6 +41,10 @@ During the exploration we found the following points that were to be discussed w
 
 There was still some work on adding good code practices but the patterns that needed to be tackled in order to make the calculator started to emerge from this sketch. Also how to organize the data, the data sources, and the required functionalities.
 
+### Better renaming of the variables and functionalities and better organization should be made
+
+This was disregarded as I was exploring the current setting but the sketch turned confusing because the naming. I was to work on this as first action before presenting the project to my team but unfortunately I had to stop short.
+
 ### The source of data should have been come from Participants and/or Group Details
 
 For the sketch of the calculator I hardcoded some data inputs, but I knew the component would require some kind of data coming from outside. The best source would be the @E_Asiedu data from participants or more likely the Group Details including @E_Asiedu Participants data. That source should update the cells (I used a HTML table for convenience but it can be any other kind of solution).

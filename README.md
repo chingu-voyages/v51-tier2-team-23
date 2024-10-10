@@ -49,7 +49,7 @@ Always default to:
 
 ### `update` function
 
-> Once the user has inputed new (absolute) contributions for the selected "participants", update their contribution and recalcuate the split between the non-edited "participants" - Observation: worked only for absolute contributions.
+> Once the user has inputed new (absolute) contributions for the selected "participants", update their contribution and split evenly the remaining contribution between the non-edited "participants" - Observation: worked only for absolute contributions.
 
 
 ## What we found

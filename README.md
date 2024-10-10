@@ -37,6 +37,10 @@ The PlantUML code can be found in one of [the folders of this branch](https://gi
 
 During the exploration we found the following points that were to be discussed with the group before stop developing:
 
+### Some of the workflows were identified
+
+There was still some work on adding good code practices but the patterns that needed to be tackled in order to make the calculator started to emerge from this sketch. Also how to organize the data, the data sources, and the required functionalities.
+
 ### The source of data should have been come from Participants and/or Group Details
 
 For the sketch of the calculator I hardcoded some data inputs, but I knew the component would require some kind of data coming from outside. The best source would be the @E_Asiedu data from participants or more likely the Group Details including @E_Asiedu Participants data. That source should update the cells (I used a HTML table for convenience but it can be any other kind of solution).
@@ -52,3 +56,7 @@ Column identification is fixed; row is likely dynamic. The need to uniquely iden
 The calculator should not save data on the data file until the user is satisfied with the result, so all data is kept on the browser until the person is satisfied, after that the data should be saved on Local Storage or on the @E_Asiedu  data file.
 
 A tentative data container was starting to emerge with the use of a empty object (see `newContr` in the `update` function) that could have been a possible option for a temporary data storage. 
+
+## What was the intention
+
+The intention was to translate our findings into a cleaner React code and formalize a component that could have been inserted in the full workflow of the app, likely to appear under the Group Details section.

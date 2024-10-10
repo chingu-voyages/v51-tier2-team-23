@@ -35,6 +35,23 @@ Bellow you can see the flow diagram made with PlantUML of the functionalities th
 
 The PlantUML code can be found in one of [the folders of this branch](https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/resources/scripts/flowDiagPlantUML).
 
+A much simple explanation of each of the functionalities in a form of tasks could have been:
+
+### `init` function
+
+Always default to:
+
+> take the total allotment (a global hardcoded value), count the number of "participants" and split the contributions evenly between them (absolute as well as percentages).
+
+### `updateCol` function
+
+> Make editable the cells of the table based on the user's selection of a column (in this sketch only available for the absolute contributions column), and the "participants".
+
+### `update` function
+
+> Once the user has inputed new (absolute) contributions for the selected "participants", update their contribution and recalcuate the split between the non-edited "participants" - Observation: worked only for absolute contributions.
+
+
 ## What we found
 
 During the exploration we found the following points that were to be discussed with the group before stop developing:

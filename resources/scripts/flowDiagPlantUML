@@ -1,0 +1,129 @@
+@startuml
+start
+#e9fffc:Get Total Allotment;
+#lightgreen:run **init**;
+end
+partition "**function** init"{
+note right
+    NOTE func **init**
+    ====
+    This function runs when loading.
+	
+	The function set all output cells
+	into a default even partition.
+	For a more formal implementation this
+	function should read an external dataset.
+end note
+start
+#lightblue:Calculate Even Contribution: Split;
+#lightblue:Calculate Even Contribution: Percentage;
+#fce9ff:Find all output elements (spans) 
+ and there row/column;
+#lightgreen:Update Contributions and Percentages
+ by row and column;
+end
+}
+partition "**function** updateCol - responds to __m0fixcol__ button"{
+note right
+    NOTE func updateCol
+    ====
+    responds to EVENT __m0fixcol__ Button
+	This function is about
+    about showing edited cells 
+	and capturing inputs
+end note
+start
+#e9fffc:Get all the html Form inputs
+ as ALL LIST OF INPUTS;
+#e9fffc:Get all radios (the columns);
+#e9fffc:Get all checkboxes (the rows);
+#fce9ff:Filter checked radio (only one column) 
+and checkboxes (multiple rows);
+note right
+	The cells under 
+	checked radio 
+	and checkboxes 
+	are the ones edited
+end note
+repeat :loop over ALL LIST OF INPUTS;
+if (INPUT ID match col/row ref?) then (yes)
+:Show input field;
+else (no)
+:Hide input field;
+endif
+repeat while (still INPUTS?) is (Yes) not (No)
+end
+}
+partition "**function** update - responds to the __m0form__ button"{
+note right
+    NOTE func update
+    ====
+    responds to EVENT __m0form__ Button
+	This function is about
+    collecting inputs from updated cells,
+	recalculating partitions,
+	and updating output cells accordingly
+end note
+start
+#e9fffc:Get all the html Form inputs
+ as ALL LIST OF INPUTS;
+#e9fffc:Get all inputs with number type
+as LIST OF NUMBER TYPE INPUTS;
+#e9fffc:Get all radios (the columns);
+#e9fffc:Get all checkboxes (the rows);
+#fce9ff:Filter checked radio (only one column) 
+and checkboxes (multiple rows);
+note right
+	The cells under 
+	checked radio 
+	and checkboxes 
+	are those edited
+	(SAME AS PREVIOUS FUNCTION)
+end note
+#e9fffc:Get all current outputs (span HTML Elements);
+#e9fffc:Initialize an empty Contribution object
+as **newContr**;
+note right
+	this object will keep track of the 
+	updated data. Keys are the col/row refs.
+	There are properties collecting contribution
+	values and statuses.
+end note
+#e9fffc:Initialize a Split counter;
+note right
+	This counter is needed to count
+	the number of not edited Participants
+	so we can eventually calculate the remaining 
+	split amount between them
+end note
+repeat :loop over LIST OF NUMBER TYPE INPUTS
+-> //Visiting only editable cells (number types)//;
+if (INPUT ID match edited cells ID?) then (yes)
+#lightgreen:Update **newContr** by key with 
+property values corresponding to 
+edited cells;
+else (no)
+#lightgreen:Update **newContr** by key with 
+property values corresponding to 
+to-Split data;
+endif
+repeat while (still INPUTS?) is (Yes) not (No)
+repeat :loop over All INPUT LIST;
+#e9fffc:Get (part of) the INPUT ID;
+if (INPUT ID match edited cells ID?) then (yes)
+:Collect current absolute contribution
+on the **newContr** object based on ID;
+else (no)
+:Assign 0 otherwise;
+endif
+repeat while (still INPUTS?) is (Yes) not (No)
+#lightblue:Calculate remaining contribution
+(previousContr - currentContr) 
+of edited Participants using 
+data collected on **newContr** obj;
+#lightblue:Split the remaining contribution
+evenly between the rest of the Participants;
+#lightgreen:Update output (HTML span);
+end
+}
+@enduml

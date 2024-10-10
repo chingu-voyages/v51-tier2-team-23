@@ -1,46 +1,54 @@
-# Getting Started with Create React App
+# Splitit App - Sketch / proof-of-concept Calculator Feature
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+In this branch you will find an unfinished sketch of a proof-of-concept calculator utility as discussed by the team on a meeting back to the second week of Sept-2024. The file can be found as a single [index.html under the `sketchcalc` folder of this branch](https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/sketchcalc/index.html)
 
-## Available Scripts
+The intention of the sketch was to make a first evaluation of the technical requirements and draw a quick-and-dirty tool that allowed us to identify what was feasible and viable in the time left.
 
-In the project directory, you can run:
+The project was intentionally done in raw HTML-JS as I was not a React developer and there were members of the team without broad technical knowledge when installing packages.
 
-### `npm start`
+The project was been prepared during the fourth Sprint and was on the way to a cleaner proposal so it could be shown to the rest of the group for further discussion before suddenly having to stop further development due to personal circunstances.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## What the plan was
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Our split calculator would have taken all our Participants with data presented on a table format or similar. It could work as follow:
+* It could split the contributions either using relative - percentage - split or absolute contribution
+* It would have allowed the editing of more than one Participant
 
-### `npm test`
+A gif of the project can be seen bellow:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![](https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/resources/img/sketchCalc.gif)
 
-### `npm run build`
+In the example above, you can see that:
+1. All split defaults to even split of 10.000 between 4 Participants at loading
+2. An edit of the column of absolute contributions for 2 Participants is selected
+3. An update is made only for the absolute contribution after change (incomplete work)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## How the code looked like
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+As previously mentioned, the sketch was left as a raw HTML / JS code as it was meant to explore the realization of a more functional project.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Bellow you can see the flow diagram made with PlantUML of the functionalities that we reached to complete before the development of the sketch had to stop:
 
-### `npm run eject`
+![](https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/resources/img/flowdiagJS.svg)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+The PlantUML code can be found in one of [the folders of this branch](https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/resources/scripts/flowDiagPlantUML).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## What we found
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+During the exploration we found the following points that were to be discussed with the group before stop developing:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### The source of data should have been come from Participants and/or Group Details
 
-## Learn More
+For the sketch of the calculator I hardcoded some data inputs, but I knew the component would require some kind of data coming from outside. The best source would be the @E_Asiedu data from participants or more likely the Group Details including @E_Asiedu Participants data. That source should update the cells (I used a HTML table for convenience but it can be any other kind of solution).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### A better, scalable way to identify cells should have been found
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+One thing I discovered during my test was that cells will require some kind of unique but easy-to-loop identification to keep track of the correct modification of the cells after editing. One solution, apart of enumerating the columns and the rows, could be to dynamically adding unique identifiers (it could be the name of the participant if unique, or any other id) so the code can be used to update the data accordingly. 
+
+Column identification is fixed; row is likely dynamic. The need to uniquely identify cells is sketched in the current proposal but it will require extensive re-work to make it useful because mine was very experimental and dirty.
+
+### Changes in the splits could have been loaded on a temporary file before the user decided to save the data
+
+The calculator should not save data on the data file until the user is satisfied with the result, so all data is kept on the browser until the person is satisfied, after that the data should be saved on Local Storage or on the @E_Asiedu  data file.
+
+A tentative data container was starting to emerge with the use of a empty object (see `newContr` in the `update` function) that could have been a possible option for a temporary data storage. 

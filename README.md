@@ -16,7 +16,7 @@ Our split calculator would have taken all our Participants with data presented o
 
 A gif of the project can be seen bellow:
 
-![](https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/resources/img/sketchCalc.gif)
+![](/resources/img/sketchCalc.gif)
 
 In the example above, you can see that:
 1. All split defaults to even split of 10.000 between 4 Participants at loading
@@ -29,7 +29,7 @@ As previously mentioned, the sketch was left as a raw HTML / JS code as it was m
 
 Bellow you can see the flow diagram made with PlantUML of the functionalities that we reached to complete before the development of the sketch had to stop:
 
-![](https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/resources/img/flowdiagJS.svg)
+![](/resources/img/flowdiagJS.svg)
 
 The PlantUML code can be found in one of [the folders of this branch](https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/resources/scripts/flowDiagPlantUML).
 

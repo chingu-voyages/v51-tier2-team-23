@@ -63,6 +63,6 @@ The calculator should not save data on the data file until the user is satisfied
 
 A tentative data container was starting to emerge with the use of a empty object (see `newContr` in the `update` function) that could have been a possible option for a temporary data storage. 
 
-## What was the intention
+## Where we were heading to
 
-The intention was to translate our findings into a cleaner React code and formalize a component that could have been inserted in the full workflow of the app, likely to appear under the Group Details section.
+The intention was to explore with the team the feasibility of translating the findings into a cleaner React code and formalize a component that could have been inserted in the full workflow of the app, likely to appear under the Group Details section. The reality is that this proof-of-concept was not discussed in our team. There was another simpler proposal by @Tesfaye that he suggested as he worked on the wireframe. But because we couldn't discuss the feasibility of this sketch and the motivation to go forward either with this proposal, the proposal by @Tesfaye, or any other proposal, the concretization of this sketch as part of the final product vision of the team was not certain.

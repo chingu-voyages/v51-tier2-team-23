@@ -23,6 +23,8 @@ In the example above, you can see that:
 2. An edit of the column of absolute contributions for 2 Participants is selected
 3. An update is made only for the absolute contribution after change (incomplete work)
 
+> __Observation__: the split was incorrect in the demo but that error is corrected in the last version of this sketch, in the index.html
+
 ## How the code looked like
 
 As previously mentioned, the sketch was left as a raw HTML / JS code as it was meant to explore the realization of a more functional project.

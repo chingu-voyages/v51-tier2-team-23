@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import GroupDetails from "./components/groupdetails";
+import GroupDetails from "./components/GroupDetails";
 
 class App extends Component {
   render() {

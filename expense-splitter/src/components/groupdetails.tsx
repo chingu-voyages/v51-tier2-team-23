@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import ParticipantsList from "./participantslist";
-import SortButton from "./sortButton";
-import Header from "./header";
-import Button from "./button";
-import TabButtons from "./tabButtons";
+import ParticipantsList from "./ParticipantsList";
+import SortButton from "./SortButton";
+import Header from "./Header";
+import Button from "./Button";
+import TabButtons from "./TabButtons";
 
 // Mock defintion of type Participant
 type Participant = {

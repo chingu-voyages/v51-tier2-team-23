@@ -9,6 +9,14 @@ type Participant = {
   dateAdded: Date;
   numberOfExpenses: number;
 };
+
+// interface Participant {
+//   name: string;
+//   contribution: string;
+//   avatarUrl: string;
+//   weight: number
+// }
+
 interface Props {
   participants: Participant[];
   admin: { id: number; name: string };

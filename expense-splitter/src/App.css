@@ -1,8 +1,18 @@
+/* this is eccss code */
+
 .container {
+  max-width: 1100px; /* Adjust as per your needs */
+  margin: 0 auto; /* This centers the container */
+  padding: 0 2rem; /* Add some padding to prevent content from touching the edges */
+}
+
+/* This is my code: changes need to be made to fit eccss code */
+
+/* .container {
   max-width: 1140px;
   margin: 0 auto;
   padding: 0rem 2rem;
-}
+} */
 
 .list {
   list-style: none;

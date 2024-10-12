@@ -1,201 +1,107 @@
-import React, { Component } from "react";
-import ParticipantsList from "./ParticipantsList";
-import SortButton from "./SortButton";
-import Header from "./Header";
-import Button from "./Button";
-import TabButtons from "./TabButtons";
+import React, { act, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import "../styles/GroupDetails.css";
+import SearchBar from "./SearchBar";
+import Expenses from "./Expenses";
+import Summary from "./Summary"; // New Summary component
+import { getFromLocalStorage } from "../utils/StorageService";
 
-// Mock defintion of type Participant
-type Participant = {
+interface Group {
   id: number;
-  name: string;
-  email: string;
-  allocation: number;
-  contribution: number;
-  dateAdded: Date;
-  numberOfExpenses: number;
-};
-
-// Mock definition of type Group
-type Group = {
-  name: string;
-  totalExpenses: number;
-  createdAt: Date;
-  numberOfExpenses: number;
-  participants: Participant[];
-  user: {
-    id: number;
-    name: string;
-    dateAdded: Date;
-    allocation: number;
-    contribution: number;
-  };
-  admin: {
-    id: number;
-    name: string;
-  };
-};
-
-// Mock Data
-const groupData: Group = {
-  name: "New Zealand Trip",
-  totalExpenses: 1000,
-  createdAt: new Date("2024-09-22"),
-  numberOfExpenses: 4,
-  participants: [
-    {
-      id: 1,
-      name: "Bran",
-      email: "bran@example.com",
-      allocation: 250,
-      contribution: 300,
-      dateAdded: new Date("2024-09-15"),
-      numberOfExpenses: 2,
-    },
-    {
-      id: 2,
-      name: "Aaron",
-      email: "aaron@example.com",
-      allocation: 500,
-      contribution: 300,
-      dateAdded: new Date("2024-09-26"),
-      numberOfExpenses: 1,
-    },
-
-    {
-      id: 3,
-      name: "Hassy",
-      email: "cassy@example.com",
-      allocation: 700,
-      contribution: 100,
-      dateAdded: new Date("2024-09-22"),
-      numberOfExpenses: 2,
-    },
-    {
-      id: 4,
-      name: "Diana",
-      email: "diana@example.com",
-      allocation: 900,
-      contribution: 250,
-      dateAdded: new Date("2024-09-12"),
-      numberOfExpenses: 3,
-    },
-  ],
-  admin: {
-    id: 1,
-    name: "Aaron",
-  },
-  user: {
-    id: 1,
-    name: "Aaron",
-    dateAdded: new Date("2024-09-22"),
-    allocation: 250,
-    contribution: 100,
-  },
-};
-
-class GroupDetails extends Component<{}> {
-  state = {
-    participants: [] as Participant[],
-    admin: {} as Participant,
-    sortOption: "name",
-    activeTab: "tab1",
-  };
-
-  componentDidMount(): void {
-    const { participants, admin } = groupData;
-    participants.sort((a, b) => a.name.localeCompare(b.name));
-    this.setState({ participants, admin });
-  }
-
-  renderBudgetStatusBadge = (participant: Participant): string => {
-    let status = this.renderBudgetStatus(participant);
-    let classname = "badge badge--small";
-    if (status === "behind") classname += " badge--primary";
-    else classname += " badge--secondary";
-
-    return classname;
-  };
-
-  renderBudgetStatus = ({ allocation, contribution }: Participant): string => {
-    const value = allocation - contribution;
-    if (value <= 0) return "onTrack";
-    return "behind";
-  };
-
-  handleSort = (sortOption: String) => {
-    let sortedParticipants = [...this.state.participants];
-
-    if (sortOption === "budget") {
-      sortedParticipants.sort((a, b) => b.allocation - a.allocation);
-    } else if (sortOption === "name") {
-      sortedParticipants.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortOption === "dateAdded") {
-      sortedParticipants.sort((a, b) => {
-        const dateA = a.dateAdded.getDate();
-        const dateB = b.dateAdded.getDate();
-        return dateA - dateB;
-      });
-    }
-
-    this.setState({ participants: sortedParticipants, sortOption });
-  };
-
-  changeTab = (tabName: string) => {
-    this.setState({ activeTab: tabName });
-  };
-
-  render() {
-    const { name, createdAt, totalExpenses } = groupData;
-    const { participants, admin, sortOption, activeTab } = this.state;
-    return (
-      <>
-        <Header
-          name={name}
-          date={createdAt.toLocaleDateString()}
-          onButtonClick={() => {}}
-          totalExpenses={totalExpenses}
-          numberOfParticipants={participants.length}
-        />
-        <TabButtons activeTab={activeTab} changeTab={this.changeTab} />
-        <div className="tab-content">
-          {activeTab === "tab1" && (
-            <div>
-              <SortButton onChange={this.handleSort} value={sortOption} />
-              <ParticipantsList
-                participants={participants}
-                admin={admin}
-                budgetStatus={this.renderBudgetStatus}
-                budgetStatusBadge={this.renderBudgetStatusBadge}
-              />
-              <div className="footer">
-                <Button
-                  name="Add Participant"
-                  onButtonClick={() => {}}
-                  className="btn"
-                />
-                <Button
-                  name="Settle up"
-                  onButtonClick={() => {}}
-                  className="btn btn--primary"
-                />
-              </div>
-            </div>
-          )}
-          {activeTab === "tab2" && (
-            <div>
-              <h3>Tab 2 Content</h3>{" "}
-            </div>
-          )}
-          {activeTab === "tab3" && (
-            <div>
-              <h3>Tab 3 Content</h3>
-            </div>
-          )}
-        </div>
-      </>
-    );
-  }
+  groupName: string;
+  description: string;
+  budget: number;
 }
+
+const GroupDetails: React.FC = () => {
+  const navigate = useNavigate();
+  const { id } = useParams<{ id: string | undefined }>();
+  const [foundGroup, setFoundGroup] = useState<Group | null>(null);
+  const [activeTab, setActiveTab] = useState("expenses");
+  const handleGoBack = () => {
+    navigate("/groups"); // Navigate to /groups route
+  };
+
+  useEffect(() => {
+    const storedGroups: Group[] = getFromLocalStorage("groups") || [];
+    const group = storedGroups.find(
+      (g: Group) => g.id === parseInt(id || "", 10)
+    );
+    setFoundGroup(group || null);
+  }, [id]);
+
+  return (
+    <div className="group-details-container">
+      <div className="layout-content">
+        <div className="group-header">
+          <p className="group-title">
+            {foundGroup ? foundGroup.groupName : "Group Details"}
+          </p>
+          <button className="settle-button" onClick={handleGoBack}>
+            <span className="button-text">Go Back</span>
+          </button>
+        </div>
+        <h3 className="group-description-header">{foundGroup?.description}</h3>
+        <p className="group-description">
+          {foundGroup ? `· $${foundGroup.budget} budget ` : ""}
+        </p>
+        <div className="tab-container">
+          <div className="tab-header">
+            <a
+              className={`tab-item ${
+                activeTab === "participants" ? "tab-active" : "tab-inactive"
+              }`}
+              onClick={() => setActiveTab("participants")}
+            >
+              <p className="tab-text">Participants</p>
+            </a>
+            <a
+              className={`tab-item ${
+                activeTab === "expenses" ? "tab-active" : "tab-inactive"
+              }`}
+              onClick={() => setActiveTab("expenses")}
+            >
+              <p className="tab-text">Expenses</p>
+            </a>
+            <a
+              className={`tab-item ${
+                activeTab === "summary" ? "tab-active" : "tab-inactive"
+              }`}
+              onClick={() => setActiveTab("summary")}
+            >
+              <p className="tab-text">Summary</p>
+            </a>
+          </div>
+        </div>
+
+        {/* Conditional rendering for tabs */}
+        {activeTab === "participants" &&
+          (foundGroup ? (
+            <p>Participants content</p>
+          ) : (
+            <p>Loading participant...</p>
+          ))}
+        {
+          activeTab === "expenses" &&
+            (foundGroup ? (
+              <Expenses groupId={foundGroup.id} />
+            ) : (
+              <p>Loading expenses...</p>
+            ))
+          // Ensure groupId is passed
+        }
+        {
+          activeTab === "summary" &&
+            (foundGroup ? (
+              <Summary groupId={foundGroup.id} />
+            ) : (
+              <p>Loading Summary...</p>
+            ))
+          // Ensure groupId is passed
+        }
+      </div>
+    </div>
+  );
+};
 
 export default GroupDetails;

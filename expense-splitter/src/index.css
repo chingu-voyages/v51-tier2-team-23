@@ -1,14 +1,31 @@
-*,
+/* This eccss code */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+/* This is my code : i need to make changes to fix with ecccss code*/
+
+/* *,
 *::after,
 *::before {
   box-sizing: border-box;
-}
+} */
 
 /* Typography */
-html {
+/* html {
   font-size: 62.5%;
-}
-body {
+} */
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -21,9 +38,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
+} */
 
-h1,
+/* h1,
 h2,
 h3 {
   margin-bottom: 1rem;
@@ -40,4 +57,4 @@ h3 {
 
 p {
   margin-top: 0;
-}
+} */

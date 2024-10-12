@@ -1,0 +1,199 @@
+/* Import Poppins Font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Body */
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8fafc;
+  color: #0e141b;
+}
+
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Modal */
+.modal {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  width: 500px;
+  max-width: 100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Modal Header */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+}
+
+.logo-section svg {
+  width: 32px;
+  height: 32px;
+  margin-right: 10px;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #999;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: #1f2937; /* Slightly darker on hover */
+}
+
+/* Section Title */
+.section-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  color: #0e141b;
+}
+
+/* Form Fields */
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-inline {
+  display: flex;
+  gap: 16px;
+}
+
+label span {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  display: inline-block;
+  color: #374151;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  color: #0e141b;
+  appearance: none; /* Removes default select arrow for custom styling */
+  cursor: pointer;
+}
+
+textarea {
+  height: 100px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #3b82f6; /* Border turns blue on focus */
+  outline: none; /* Removes the default outline */
+}
+
+/* Custom Select Arrow */
+select {
+  background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"%3E%3Cpath fill="%233b82f6" d="M7 10l5 5 5-5z"/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 12px center; /* Position arrow */
+  background-size: 16px 16px;
+}
+
+/* Buttons */
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.cancel-button,
+.save-button {
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 0.875rem; /* Equivalent to text-sm */
+  font-family: 'Poppins', sans-serif; /* Ensure Poppins applies to buttons */
+  font-weight: 500; /* Slight boldness for emphasis */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+  border: none; /* Remove borders */
+}
+
+/* Cancel Button */
+.cancel-button {
+  background-color: #e5e7eb;
+  color: #374151;
+  margin-right: 12px;
+}
+
+.cancel-button:hover {
+  background-color: #d1d5db; /* Slight darkening on hover */
+  color: #1f2937; /* Darker text color on hover */
+}
+
+/* Save Button */
+.save-button {
+  background-color: #1d4ed8;
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #3b82f6; /* Lighter blue on hover */
+  color: white; /* Text remains white on hover */
+}
+
+/* Optional: Media Query for Smaller Screens */
+@media (max-width: 768px) {
+  .modal {
+    padding: 24px; /* Smaller padding for mobile screens */
+    width: 90%; /* Adjust width for mobile */
+  }
+
+  .section-title {
+    font-size: 1.75rem; /* Slightly smaller title */
+  }
+
+  .form-group {
+    margin-bottom: 16px; /* Smaller gaps between form fields */
+  }
+
+  .cancel-button,
+  .save-button {
+    padding: 8px 16px; /* Smaller buttons */
+  }
+
+}

@@ -1,0 +1,74 @@
+/* styles.css */
+
+.search-bar-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.search-bar-container .title {
+  color: #0e141b;
+  font-size: 33px !important; /* Force this font size to override any other conflicting styles */
+  font-weight: bold;
+  line-height: 1.25; /* Adjust line height to prevent text overlap */
+  min-width: 18rem; /* Ensures minimum width for larger screen readability */
+  letter-spacing: 0.015em; /* Slight spacing to improve legibility */
+  margin-bottom: 1rem; /* Space between title and search bar */
+  margin-top: 2rem;
+}
+
+.search-label {
+  display: flex;
+  flex-direction: column;
+  min-width: 10rem; /* Equivalent to min-w-40 */
+  height: 3rem; /* Equivalent to h-12 */
+  width: 100%;
+}
+
+.search-input-container {
+  display: flex;
+  width: 100%;
+  flex: 1;
+  align-items: stretch;
+  border-radius: 1rem; /* Equivalent to rounded-xl */
+  height: 100%;
+}
+
+.search-icon {
+  color: #4e7397;
+  display: flex;
+  border: none;
+  background-color: #e7edf3;
+  align-items: center;
+  justify-content: center;
+  padding-left: 1rem; /* Equivalent to pl-4 */
+  border-top-left-radius: 1rem; /* Equivalent to rounded-l-xl */
+  border-bottom-left-radius: 1rem; /* Equivalent to rounded-l-xl */
+  border-right: 0; /* No right border */
+}
+
+.search-input {
+  flex: 1;
+  resize: none;
+  overflow: hidden;
+  border-radius: 0 1rem 1rem 0; /* Rounded right corners only */
+  color: #0e141b;
+  outline: none;
+  background-color: #e7edf3;
+  border: none;
+  height: 100%;
+  padding: 0 1rem; /* Equivalent to px-4 */
+  font-size: 1rem; /* Equivalent to text-base */
+  font-weight: normal;
+  line-height: normal;
+}
+
+.search-input::placeholder {
+  color: #4e7397; /* Placeholder color */
+}
+
+/* Additional styles for focus state (optional) */
+.search-input:focus {
+  outline: none;
+  box-shadow: none; /* Remove default outline */
+}

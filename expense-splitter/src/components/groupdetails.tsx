@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar";
 import Expenses from "./Expenses";
 import Summary from "./Summary"; // New Summary component
 import { getFromLocalStorage } from "../utils/StorageService";
+import ParticipantsList from "./ParticipantsList";
 
 interface Group {
   id: number;
@@ -77,7 +78,7 @@ const GroupDetails: React.FC = () => {
         {/* Conditional rendering for tabs */}
         {activeTab === "participants" &&
           (foundGroup ? (
-            <p>Participants content</p>
+            <ParticipantsList groupId={foundGroup.id} />
           ) : (
             <p>Loading participant...</p>
           ))}

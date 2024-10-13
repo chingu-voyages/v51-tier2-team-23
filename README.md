@@ -1,6 +1,6 @@
 # Splitit App - Sketch / proof-of-concept Calculator Feature
 
-In this branch you will find an unfinished sketch of a proof-of-concept calculator utility as discussed by the team on a meeting back to the second week of Sept-2024. The file can be found as a single [index.html with a JS and CSS files under the `sketchcalc` folder of this branch](https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/sketchcalc/index.html)
+In this branch you will find an unfinished sketch of a proof-of-concept calculator utility as discussed by the team on a meeting back to the second week of Sept-2024. The file can be found as a single [index.html under the `sketchcalc` folder of this branch](https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/sketchcalc/index.html) and [corresponding JS and CSS files under `resources` folder of this branch(https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/resources).
 
 The intention of the sketch was to make a first evaluation of the technical requirements and draw a quick-and-dirty tool that allowed us to identify what was feasible and viable in the time left.
 

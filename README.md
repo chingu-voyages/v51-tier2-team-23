@@ -14,7 +14,7 @@ Our split calculator would have taken all our Participants with data presented o
 * It could split the contributions either using relative - percentage - split or absolute contribution
 * It would have allowed the editing of more than one Participant
 
-A gif of the project can be seen bellow:
+A gif (1min per repeat) of the project can be seen bellow:
 
 ![](/resources/img/sketchCalc.gif)
 

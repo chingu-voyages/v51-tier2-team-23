@@ -58,7 +58,7 @@ The choice of JS over TS was originally made to make a quick prototype. When I r
 
 ### The source of data should have come from Participants and/or Group Details
 
-For the sketch of the calculator I hardcoded some data inputs, but I knew the component would require some kind of data coming from outside. The best source would be the @E_Asiedu data from participants or more likely the Group Details including @E_Asiedu Participants data. That source should update the cells (I used a HTML table for convenience but it can be any other kind of solution).
+For the sketch of the calculator I hardcoded some data inputs, but some of the data is populated automatically from a JS object acting as a dataset at loading. The best source would be the @E_Asiedu data from participants or more likely the Group Details including @E_Asiedu Participants data. That source should update the cells (I used a HTML table for convenience but it can be any other kind of solution).
 
 ### A better, scalable way to identify cells had to be found
 

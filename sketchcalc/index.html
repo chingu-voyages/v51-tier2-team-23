@@ -1,32 +1,76 @@
 <html>
+    <link rel="stylesheet" type="text/css"  href="./Header.css">
+    <link rel="stylesheet" type="text/css"  href="./Expenses.css">
     <style>
-        table, th, td{
-            border:1px solid black;
+
+        .total{
+            margin-top: 5%;
+            margin-left: 30%;
         }
+
+        .center {
+            margin-top: 1%;
+            margin-left: auto;
+            margin-right: auto;
+            min-width: 700px;
+          }
+
+        
+        table{
+            overflow: auto;
+            min-width: 600px;
+            text-align: center;
+        }
+
+        table, thead, tr{
+            border-collapse: collapse;
+            border-bottom: 2px solid rgb(140 140 140);
+        }
+
+        thead{
+        background-color: rgb(228 240 245);
+        }
+
         td{
             height: 20px;
             width: auto;
+            padding: 4px 7px 2px;
+            vertical-align: bottom;
+            white-space:nowrap
         }
+
+        tr:hover {background-color: #D6EEEE;}
+
+        .outPaid{
+            color:green;
+        }
+
+        .outAbsRem, .outRelRem{
+            color:red;
+        }
+
         input[type="number"]{
             display:none;
         }
     </style>
     <body>
-        <div>
+        <div class="total">
             <h5>Total</h5>
             <div id="tot">10000</div>
         </div>
+        
+        <div class="add-expense-container center">
         <form id="calcForm" action="">
             <table>
-                <tr id="namingTbHeaders">
+                <thead id="namingTbHeaders">
                     <th>Fix</th>
                     <th>Name</th>
-                    <th>% Current Split</th>
-                    <th>Expected Contr</th>
+                    <th>Weight (%)</th>
+                    <th>Owed</th>
                     <th>Paid</th>
-                    <th>Remain</th>
-                    <th>Remain %</th>
-                </tr>
+                    <th>To Pay</th>
+                    <th>To Pay (%)</th>
+                </thead>
                 <tr id="radioBtnsTHeaders">
                     <th class="fix selcol" id="checkboxesTbCol">&nbsp;</th>
                     <th class="name selcol" id="namesTbCol">&nbsp;</th>
@@ -37,9 +81,10 @@
                     <th class="remperc selcol" id="relativeRemainingTbCol">&nbsp;</th>
                 </tr>
             </table>
-            <input id="editBtn" type="button" value="Edit">
-            <input id="updateBtn" type="button" value="Update">
+            <input class="add-expense-button" id="editBtn" type="button" value="Edit">
+            <input class="add-expense-button" id="updateBtn" type="button" value="Update">
         </form>
+    </div>
     </body>
     <script type="text/javascript" src="main.js"></script>
 </html>

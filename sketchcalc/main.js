@@ -9,21 +9,25 @@ let dataset = [
 {
     name: 'Quien',
     recordId: 'quien',
+    paid:0,
     absolContr: null
 },
 {
     name: 'Como',
     recordId: 'como',
+    paid:1000,
     absolContr: null
 },
 {
     name: 'Donde',
     recordId: 'donde',
+    paid:0,
     absolContr: null
 },
 {
     name: 'Cuando',
     recordId: 'cuando',
+    paid:0,
     absolContr: null
 },
 ];
@@ -32,16 +36,16 @@ let dataset = [
 
 let outputs = {};
 
-let selectedCells = {
+let __selectedCells = {
     checkedColId: null,
     checkedRowIds: [],
     rowCount: -1,
     editableCells: []
 }
 
-let updatedContribs = {} 
+let __updatedContribs = {} 
 
-let recordIds = dataset.map((v,i)=>{return v.recordId;});
+let __recordIds = dataset.map((v,i)=>{return v.recordId;});
 
 const cTot = Number(document.getElementById("tot").innerHTML);
 
@@ -51,7 +55,9 @@ let numberOfSplits = 0;
 
 const table = document.querySelector("table");
 
-let getOutputs = function(selector){return document.querySelectorAll(selector)};
+let __getEditables = function(){return document.querySelectorAll('.editable')}
+
+let __getOutputs = function(selector){return document.querySelectorAll(selector)};
 
 /* FUNCTIONALITIES */
 
@@ -70,7 +76,7 @@ let populateFunc = function(){ //create table
 
         //start populating updateContribs with the record ids as keys
         
-        updatedContribs[ dataset[rcdIdx].recordId] = {};
+        __updatedContribs[ dataset[rcdIdx].recordId] = {};
 
         //prepare the correponding cells, specific to each column
         
@@ -97,17 +103,19 @@ let populateFunc = function(){ //create table
         let rcdPaidCell = rcdRow.insertCell(4);
         rcdPaidCell.id = dataset[rcdIdx].recordId + '-rcdPaidCell';
         rcdPaidCell.headers = 'editPaid';
-        rcdPaidCell.innerHTML = `<input class='editable editPaid' type='number' name='spl' id='${dataset[rcdIdx].recordId}-editPaid' min='0' max='100'><span class='output outPaid' id='${dataset[rcdIdx].recordId}-outPaid'>0.00</span>`;
+        rcdPaidCell.innerHTML = `<input class='editable editPaid' type='number' name='spl' id='${dataset[rcdIdx].recordId}-editPaid' min='0' max='100'><span class='output outPaid' id='${dataset[rcdIdx].recordId}-outPaid'>${dataset[rcdIdx].paid}</span>`;
 
         let rcdAbsRemCell = rcdRow.insertCell(5);
         rcdAbsRemCell.id = dataset[rcdIdx].recordId + '-rcdAbsRemCell';
         rcdAbsRemCell.headers = 'absoluteRemainingTbCol';
-        rcdAbsRemCell.innerHTML = `<span class='output outAbsRem' id='${dataset[rcdIdx].recordId}-outAbsRem'>${eqCon}</span>`;
+        let toPay = eqCon - dataset[rcdIdx].paid;
+        rcdAbsRemCell.innerHTML = `<span class='output outAbsRem' id='${dataset[rcdIdx].recordId}-outAbsRem'>${toPay}</span>`;
 
         let rcdRelRemCell = rcdRow.insertCell(6);
         rcdRelRemCell.id = dataset[rcdIdx].recordId + '-rcdRelRemCell';
         rcdRelRemCell.headers = 'relativeRemainingTbCol';
-        rcdRelRemCell.innerHTML = `<span class='output outRelRem' id='${dataset[rcdIdx].recordId}-outRelRem'>${eqPer}</span>`;
+        let toPayPer = parseInt(toPay*100/eqCon)
+        rcdRelRemCell.innerHTML = `<span class='output outRelRem' id='${dataset[rcdIdx].recordId}-outRelRem'>${toPayPer}</span>`;
 
         //go to the following row
 
@@ -131,84 +139,210 @@ function __getCheckedColRows(){
 
     //collect colid, rowids, length of the table and all editable cells
 
-    selectedCells.checkedColId = checkedCol[0].id;
-    selectedCells.checkedRowIds = checkedRows.map((v,i)=> {return (v.id).split('-')[0]});
-    selectedCells.rowCount = table.rows.length;
-    selectedCells.editableCells = document.querySelectorAll("." + selectedCells.checkedColId);
+    __selectedCells.checkedColId = checkedCol[0].id;
+    __selectedCells.checkedRowIds = checkedRows.map((v,i)=> {return (v.id).split('-')[0]});
+    __selectedCells.rowCount = table.rows.length;
+    __selectedCells.editableCells = document.querySelectorAll("." + __selectedCells.checkedColId);
 }
 
 let editBtnFunc = function(){
     
-    //populate selectedCells
+    //populate __selectedCells
     
     __getCheckedColRows();
 
     //go through all editable cells; if marked as selected, display the Edit field
+    let editables = __getEditables();
 
-    for(let editIdx = 0; editIdx < selectedCells.editableCells.length; editIdx++){
-        if(selectedCells.checkedRowIds.includes((selectedCells.editableCells[editIdx].id).split('-')[0])){
-            selectedCells.editableCells[editIdx].style.display = 'inline-block';
+    for(let editIdx = 0; editIdx < editables.length; editIdx++){
+        if(__selectedCells.checkedRowIds.includes((editables[editIdx].id).split('-')[0]) && (editables[editIdx].id).split('-')[1] === __selectedCells.checkedColId){
+            editables[editIdx].style.display = 'inline-block';
         }else{
-            selectedCells.editableCells[editIdx].style.display = 'none';
+            editables[editIdx].style.display = 'none';
         }
     }
 }
 
 let updateBtnFunc = function(){
+
     
+        /* TODO
+    [x]- push also outputs to __updatedContribs[key].newContr (line 218)
+    [x]- if edited, push the difference with current output, otherwise 0
+
+    [x]- sum new split (line 232)
+
+    [x]- go through output again, to update the new values, where the new split is added to the non-edited (from line 236)
+    []- recalcuate the percentage
+
+    [x]- update percentages and differences with paid values
+
+        THEN
+    []- do the opposite algorithm for updates on the percentage column
+
+        THEN
+    []- do a simpler algorithm for the paid column
+        */
+
     //is the AbsSpl col edited?
     
-    if(selectedCells.checkedColId == 'editAbsSpl'){
+    if(__selectedCells.checkedColId == 'editAbsSpl'){
         
-        // get data from edited cells and keep it in updatedContribs
+        let __outsAbsSpl = __getOutputs('.outAbsSpl');
 
-        for(let editedIdx = 0; editedIdx <  selectedCells.editableCells.length; editedIdx++){
-            let key = (selectedCells.editableCells[editedIdx].id).split('-')[0];
-            newContrs[key].newAbsContr = [Number(selectedCells.editableCells[editedIdx].value)];
+        // get data from edited cells and keep it in __updatedContribs
+
+        for(let editedIdx = 0; editedIdx <  __selectedCells.editableCells.length; editedIdx++){
+            let key = (__selectedCells.editableCells[editedIdx].id).split('-')[0];
 
             //just check if there is a value to see if edited
 
-            if(selectedCells.editableCells[editedIdx].value){
-                newContrs[key].edited = true;
-                newContrs[key].newRelContr = 100*newContrs[key].newAbsContr/cTot;
+            if(__selectedCells.editableCells[editedIdx].value != ''){
+                __updatedContribs[key].newContr = [Number(__selectedCells.editableCells[editedIdx].value)];
+                __updatedContribs[key].edited = true;
+                //__updatedContribs[key].newRelContr = 100*__updatedContribs[key].newContr/cTot;
             }else{
-                newContrs[key].edited = false;
-                newContrs[key].newRelContr = null;
+                __updatedContribs[key].newContr = [Number(__outsAbsSpl[editedIdx].innerHTML)];
+                __updatedContribs[key].edited = false;
+                //__updatedContribs[key].newRelContr = null;
                 numberOfSplits += 1;
             }
         }
+
+        //get current contr value and make a first collection of differences
+
+
+    
+        for(let outputIdx = 0; outputIdx <  __outsAbsSpl.length; outputIdx++){
+            let key = (__outsAbsSpl[outputIdx].id).split('-')[0];
+            __updatedContribs[key].newContr.push(Number(__outsAbsSpl[outputIdx].innerHTML));
+            if(__selectedCells.checkedRowIds.includes(key)){
+                __updatedContribs[key].newContr.push(__updatedContribs[key].newContr[1]-__updatedContribs[key].newContr[0]);
+            }else{
+                __updatedContribs[key].newContr.push(0);
+            }
+        }
+
+        //console.log(__updatedContribs);
+
+        let sumNewSplit = Object.keys(__updatedContribs).map((k,i)=>{if(__updatedContribs[k].edited){return __updatedContribs[k].newContr[2]}}).filter((v,i)=>{return v != undefined}).reduce((acc, b)=>{return acc+b});
+        let __outsRelSpl = __getOutputs('.outRelSpl');
+        let __outsPaid = __getOutputs('.outPaid');
+        let __outsAbsRem = __getOutputs('.outAbsRem');
+        let __outsRelRem = __getOutputs('.outRelRem');
+        for(let key in __updatedContribs){
+            //console.log(key, __updatedContribs[key])
+            for(let outputIdx = 0; outputIdx < __outsAbsSpl.length; outputIdx++) {
+                if((__outsAbsSpl[outputIdx].id).includes(key)){
+                    if(__updatedContribs[key].edited){
+                        __outsAbsSpl[outputIdx].innerHTML = __updatedContribs[key].newContr[0];
+                        __outsRelSpl[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[0]*100/cTot);
+                        __outsAbsRem[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[0] - Number(__outsPaid[outputIdx].innerHTML));
+                        __outsRelRem[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[0] - Number(__outsPaid[outputIdx].innerHTML))*100/__updatedContribs[key].newContr[0]);
+                    }else{
+                        __outsAbsSpl[outputIdx].innerHTML = __updatedContribs[key].newContr[1] + sumNewSplit/numberOfSplits;
+                        __outsRelSpl[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[1] + sumNewSplit/numberOfSplits)*100/cTot);
+                        __outsAbsRem[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[1] + sumNewSplit/numberOfSplits - Number(__outsPaid[outputIdx].innerHTML));
+                        __outsRelRem[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[1] + sumNewSplit/numberOfSplits - Number(__outsPaid[outputIdx].innerHTML))*100/(__updatedContribs[key].newContr[1] + sumNewSplit/numberOfSplits));
+                    }
+                }
+            }             
+        }
+    }else if(__selectedCells.checkedColId == 'editRelSpl'){
+        
+        let __outsRelSpl = __getOutputs('.outRelSpl');
+
+        // get data from edited cells and keep it in __updatedContribs
+
+        for(let editedIdx = 0; editedIdx <  __selectedCells.editableCells.length; editedIdx++){
+            let key = (__selectedCells.editableCells[editedIdx].id).split('-')[0];
+
+            //just check if there is a value to see if edited
+
+            if(__selectedCells.editableCells[editedIdx].value != ''){
+                __updatedContribs[key].newContr = [Number(__selectedCells.editableCells[editedIdx].value)];
+                __updatedContribs[key].edited = true;
+            }else{
+                __updatedContribs[key].newContr = [Number(__outsRelSpl[editedIdx].innerHTML)];
+                __updatedContribs[key].edited = false;
+                numberOfSplits += 1;
+            }
+        }
+
+        //get current contr value and make a first collection of differences
+
+
+    
+        for(let outputIdx = 0; outputIdx <  __outsRelSpl.length; outputIdx++){
+            let key = (__outsRelSpl[outputIdx].id).split('-')[0];
+            __updatedContribs[key].newContr.push(Number(__outsRelSpl[outputIdx].innerHTML));
+            if(__selectedCells.checkedRowIds.includes(key)){
+                __updatedContribs[key].newContr.push(__updatedContribs[key].newContr[1]-__updatedContribs[key].newContr[0]);
+            }else{
+                __updatedContribs[key].newContr.push(0);
+            }
+        }
+
+        //console.log(__updatedContribs);
+
+        let sumNewSplit = Object.keys(__updatedContribs).map((k,i)=>{if(__updatedContribs[k].edited){return __updatedContribs[k].newContr[2]}}).filter((v,i)=>{return v != undefined}).reduce((acc, b)=>{return acc+b});
+        let __outsAbsSpl = __getOutputs('.outAbsSpl');
+        let __outsPaid = __getOutputs('.outPaid');
+        let __outsAbsRem = __getOutputs('.outAbsRem');
+        let __outsRelRem = __getOutputs('.outRelRem');
+        for(let key in __updatedContribs){
+            //console.log(key, __updatedContribs[key])
+            for(let outputIdx = 0; outputIdx < __outsRelSpl.length; outputIdx++) {
+                if((__outsRelSpl[outputIdx].id).includes(key)){
+                    if(__updatedContribs[key].edited){
+                        __outsAbsSpl[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[0]*cTot/100);
+                        __outsRelSpl[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[0]);
+                        __outsAbsRem[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[0] - Number(__outsPaid[outputIdx].innerHTML));
+                        __outsRelRem[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[0] - Number(__outsPaid[outputIdx].innerHTML))*100/__updatedContribs[key].newContr[0]);
+                    }else{
+                        __outsAbsSpl[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[1] + sumNewSplit)*cTot/(100*numberOfSplits));
+                        __outsRelSpl[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[1] + sumNewSplit/numberOfSplits));
+                        __outsAbsRem[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[1] + sumNewSplit)*cTot/(100*numberOfSplits) - Number(__outsPaid[outputIdx].innerHTML));
+                        __outsRelRem[outputIdx].innerHTML = parseInt(((__updatedContribs[key].newContr[1] + sumNewSplit)*cTot/(100*numberOfSplits) - Number(__outsPaid[outputIdx].innerHTML))*100/((__updatedContribs[key].newContr[1] + sumNewSplit)*cTot/(100*numberOfSplits)));
+                    }
+                }
+            }             
+        }
     }
 
-    //get current contr value and make a first collection of differences
+    //set all global variables to initial
+    
+    outputs = {};
 
-    let outputs = getOutputs('.outAbsSpl');
-
-    /* TODO
-        - push also outputs to newContrs[key].newAbsContr (line 218)
-        - if edited, push the difference with current output, otherwise 0
-
-        - sum new split (line 232)
-
-        - go through output again, to update the new values, where the new split is added to the non-edited (from line 236)
-        - recalcuate the percentage
-
-        - update percentages and differences with paid values
-
-    THEN
-        - do the opposite algorithm for updates on the percentage column
-
-    THEN
-        - do a simpler algorithm for the paid column
-    */
-    for(let outputIdx = 0; outputIdx <  outputs.length; outputIdx++){
-
+    __selectedCells = {
+        checkedColId: null,
+        checkedRowIds: [],
+        rowCount: -1,
+        editableCells: []
     }
+    
+    __updatedContribs = {}
+    for(let rcdIdIdx = 0; rcdIdIdx < __recordIds.length; rcdIdIdx++){
+        __updatedContribs[__recordIds[rcdIdIdx]] = {};
+    }
+
+    //reset all checked boxes and radios to unchecked
+
+    document.querySelectorAll('input[type="radio"]').forEach((v,i)=>{if(v.checked){v.checked = false}});
+    document.querySelectorAll('input[type="checkbox"]').forEach((v,i)=>{if(v.checked){v.checked = false}});
+    __getEditables().forEach((v,i)=>{v.style.display = 'none'});
 
 
 }
 
+//}
+
 window.onload = function(){
     populateFunc();
+
     const editBtn = document.querySelector('#editBtn');
     editBtn.addEventListener('click', editBtnFunc);
+
+    const updateBtn = document.querySelector('#updateBtn');
+    updateBtn.addEventListener('click', updateBtnFunc);
 }

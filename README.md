@@ -11,7 +11,7 @@ This development began during the fourth Sprint and was on the way to a cleaner 
 ## What the plan was
 
 Our split calculator would have taken all our Participants with data presented on a table format or similar. It could work as follow:
-* It could split the contributions either using relative - percentage - split or absolute contribution
+* It could split evenly the contributions either using relative - percentage - split or absolute contribution; it can also recalculate for updates in payments
 * It would have allowed the editing of more than one Participant
 
 A gif (1min per repeat) of the project can be seen bellow:
@@ -20,8 +20,8 @@ A gif (1min per repeat) of the project can be seen bellow:
 
 In the example above, you can see that:
 1. All split defaults to even split of 10000 between 4 Participants at loading
-2. An edit of the column of absolute contributions for 2 Participants is selected
-3. An update is made only for the absolute contribution after change
+2. Edits of different columns and Participants are made at different moments
+3. Updates of the all table are made accordingly
 
 ## How the code looked like
 
@@ -33,7 +33,7 @@ A much simple explanation of each of the functionalities in a form of tasks coul
 
 Always default to:
 
-> take the total allotment (a global hardcoded value), count the number of "participants" and split the contributions evenly between them (absolute as well as percentages).
+> take the total allotment (a global hardcoded value), populate the table, count the number of "participants" and split the contributions evenly between them (absolute as well as percentages).
 
 ### `editBtnFunc` function
 
@@ -41,7 +41,7 @@ Always default to:
 
 ### `updateBtnFunc` function
 
-> Once the user has inputed new (absolute) contributions for the selected "participants", update their contribution and split evenly the remaining contribution between the non-edited "participants".
+> Once the user has inputed either new (absolute / relative) contributions or payments for the selected "participants", update their contribution/payment and, if another contribution, split evenly the remaining contribution between the non-edited "participants".
 
 
 ## What we found

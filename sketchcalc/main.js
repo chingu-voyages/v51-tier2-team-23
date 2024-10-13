@@ -49,11 +49,11 @@ let __recordIds = dataset.map((v,i)=>{return v.recordId;});
 
 const cTot = Number(document.getElementById("tot").innerHTML);
 
-let numberOfSplits = 0;
+let __numberOfSplits = 0;
 
 /* CONSTANTS and GLOBAL-USE ELEMENTS */
 
-const table = document.querySelector("table");
+let table = document.querySelector("table");
 
 let __getEditables = function(){return document.querySelectorAll('.editable')}
 
@@ -205,7 +205,7 @@ let updateBtnFunc = function(){
                 __updatedContribs[key].newContr = [Number(__outsAbsSpl[editedIdx].innerHTML)];
                 __updatedContribs[key].edited = false;
                 //__updatedContribs[key].newRelContr = null;
-                numberOfSplits += 1;
+                __numberOfSplits += 1;
             }
         }
 
@@ -235,15 +235,15 @@ let updateBtnFunc = function(){
             for(let outputIdx = 0; outputIdx < __outsAbsSpl.length; outputIdx++) {
                 if((__outsAbsSpl[outputIdx].id).includes(key)){
                     if(__updatedContribs[key].edited){
-                        __outsAbsSpl[outputIdx].innerHTML = __updatedContribs[key].newContr[0];
+                        __outsAbsSpl[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[0]);
                         __outsRelSpl[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[0]*100/cTot);
                         __outsAbsRem[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[0] - Number(__outsPaid[outputIdx].innerHTML));
                         __outsRelRem[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[0] - Number(__outsPaid[outputIdx].innerHTML))*100/__updatedContribs[key].newContr[0]);
                     }else{
-                        __outsAbsSpl[outputIdx].innerHTML = __updatedContribs[key].newContr[1] + sumNewSplit/numberOfSplits;
-                        __outsRelSpl[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[1] + sumNewSplit/numberOfSplits)*100/cTot);
-                        __outsAbsRem[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[1] + sumNewSplit/numberOfSplits - Number(__outsPaid[outputIdx].innerHTML));
-                        __outsRelRem[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[1] + sumNewSplit/numberOfSplits - Number(__outsPaid[outputIdx].innerHTML))*100/(__updatedContribs[key].newContr[1] + sumNewSplit/numberOfSplits));
+                        __outsAbsSpl[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[1] + sumNewSplit/__numberOfSplits);
+                        __outsRelSpl[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[1] + sumNewSplit/__numberOfSplits)*100/cTot);
+                        __outsAbsRem[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[1] + sumNewSplit/__numberOfSplits - Number(__outsPaid[outputIdx].innerHTML));
+                        __outsRelRem[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[1] + sumNewSplit/__numberOfSplits - Number(__outsPaid[outputIdx].innerHTML))*100/(__updatedContribs[key].newContr[1] + sumNewSplit/__numberOfSplits));
                     }
                 }
             }             
@@ -265,7 +265,7 @@ let updateBtnFunc = function(){
             }else{
                 __updatedContribs[key].newContr = [Number(__outsRelSpl[editedIdx].innerHTML)];
                 __updatedContribs[key].edited = false;
-                numberOfSplits += 1;
+                __numberOfSplits += 1;
             }
         }
 
@@ -283,7 +283,7 @@ let updateBtnFunc = function(){
             }
         }
 
-        //console.log(__updatedContribs);
+        console.log(__updatedContribs);
 
         let sumNewSplit = Object.keys(__updatedContribs).map((k,i)=>{if(__updatedContribs[k].edited){return __updatedContribs[k].newContr[2]}}).filter((v,i)=>{return v != undefined}).reduce((acc, b)=>{return acc+b});
         let __outsAbsSpl = __getOutputs('.outAbsSpl');
@@ -295,18 +295,42 @@ let updateBtnFunc = function(){
             for(let outputIdx = 0; outputIdx < __outsRelSpl.length; outputIdx++) {
                 if((__outsRelSpl[outputIdx].id).includes(key)){
                     if(__updatedContribs[key].edited){
-                        __outsAbsSpl[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[0]*cTot/100);
                         __outsRelSpl[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[0]);
+                        __updatedContribs[key].newContr = __updatedContribs[key].newContr.map((v,i)=>{return parseInt(v/100*cTot)});
+                        __outsAbsSpl[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[0]);
                         __outsAbsRem[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[0] - Number(__outsPaid[outputIdx].innerHTML));
                         __outsRelRem[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[0] - Number(__outsPaid[outputIdx].innerHTML))*100/__updatedContribs[key].newContr[0]);
                     }else{
-                        __outsAbsSpl[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[1] + sumNewSplit)*cTot/(100*numberOfSplits));
-                        __outsRelSpl[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[1] + sumNewSplit/numberOfSplits));
-                        __outsAbsRem[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[1] + sumNewSplit)*cTot/(100*numberOfSplits) - Number(__outsPaid[outputIdx].innerHTML));
-                        __outsRelRem[outputIdx].innerHTML = parseInt(((__updatedContribs[key].newContr[1] + sumNewSplit)*cTot/(100*numberOfSplits) - Number(__outsPaid[outputIdx].innerHTML))*100/((__updatedContribs[key].newContr[1] + sumNewSplit)*cTot/(100*numberOfSplits)));
+                        __outsRelSpl[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[1] + sumNewSplit/__numberOfSplits));
+                        __updatedContribs[key].newContr = __updatedContribs[key].newContr.map((v,i)=>{return parseInt(v/100*cTot)});
+                        let redoNewSplit = parseInt(sumNewSplit*cTot/100);
+                        __outsAbsSpl[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[1] + redoNewSplit/__numberOfSplits);
+                        __outsAbsRem[outputIdx].innerHTML = parseInt(__updatedContribs[key].newContr[1] + redoNewSplit/__numberOfSplits - Number(__outsPaid[outputIdx].innerHTML));
+                        __outsRelRem[outputIdx].innerHTML = parseInt((__updatedContribs[key].newContr[1] + redoNewSplit/__numberOfSplits - Number(__outsPaid[outputIdx].innerHTML))*100/(__updatedContribs[key].newContr[1] + redoNewSplit/__numberOfSplits));
                     }
                 }
             }             
+        }
+    }else if(__selectedCells.checkedColId == 'editPaid'){
+        
+        let __outsPaid = __getOutputs('.outPaid');
+
+        // get data from edited cells and keep it in __updatedContribs
+
+        let __outsAbsSpl = __getOutputs('.outAbsSpl');
+        let __outsAbsRem = __getOutputs('.outAbsRem');
+        let __outsRelRem = __getOutputs('.outRelRem');
+
+        for(let editedIdx = 0; editedIdx <  __selectedCells.editableCells.length; editedIdx++){
+            let key = (__selectedCells.editableCells[editedIdx].id).split('-')[0];
+
+            //just check if there is a value to see if edited
+
+            if(__selectedCells.editableCells[editedIdx].value != ''){
+                __outsPaid[editedIdx].innerHTML = parseInt(__selectedCells.editableCells[editedIdx].value);
+                __outsAbsRem[editedIdx].innerHTML = parseInt(Number(__outsAbsSpl[editedIdx].innerHTML) - parseInt(__selectedCells.editableCells[editedIdx].value));
+                __outsRelRem[editedIdx].innerHTML = parseInt((Number(__outsAbsSpl[editedIdx].innerHTML) - parseInt(__selectedCells.editableCells[editedIdx].value))*100/Number(__outsAbsSpl[editedIdx].innerHTML));
+            }
         }
     }
 
@@ -326,11 +350,13 @@ let updateBtnFunc = function(){
         __updatedContribs[__recordIds[rcdIdIdx]] = {};
     }
 
+    __numberOfSplits = 0;
+
     //reset all checked boxes and radios to unchecked
 
     document.querySelectorAll('input[type="radio"]').forEach((v,i)=>{if(v.checked){v.checked = false}});
     document.querySelectorAll('input[type="checkbox"]').forEach((v,i)=>{if(v.checked){v.checked = false}});
-    __getEditables().forEach((v,i)=>{v.style.display = 'none'});
+    __getEditables().forEach((v,i)=>{v.style.display = 'none'; v.value = '';});
 
 
 }

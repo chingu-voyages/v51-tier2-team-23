@@ -52,9 +52,9 @@ During the exploration we found the following points that were to be discussed w
 
 There was still some work on adding good code practices but the patterns that needed to be tackled in order to make the calculator started to emerge from this sketch. Also how to organize the data, the data sources, and the required functionalities.
 
-### Better renaming of the variables and functionalities and better organization had to be made
+### The project was left as JS
 
-This was disregarded as I explored the settings but the sketch started to turn confusing because the naming. I was to work on this as first priority before presenting the project to my team but I couldn't make it.
+The choice of JS over TS was originally made to make a quick prototype. When I resumed the development I was not in conditions to work on TS and left the project as JS.
 
 ### The source of data should have come from Participants and/or Group Details
 
@@ -62,9 +62,7 @@ For the sketch of the calculator I hardcoded some data inputs, but I knew the co
 
 ### A better, scalable way to identify cells had to be found
 
-One thing I discovered during my test was that cells will require some kind of unique but easy-to-loop identification to keep track of the correct modification of the cells after editing. One solution, apart of enumerating the columns and the rows, could be to dynamically adding unique identifiers (it could be the name of the participant if unique, or any other id) so the code can be used to update the data accordingly. 
-
-Column identification is fixed; row is likely dynamic. The need to uniquely identify cells is sketched in the current proposal but it will require extensive re-work to make it useful because mine was very experimental and dirty.
+There are many ways to trace the cells in the table. It is about to find an optimal solution. Currently the identification is enough but not ideal. It requires more research. 
 
 ### Changes in the splits could have been loaded on a temporary file before the user decided to save the data
 

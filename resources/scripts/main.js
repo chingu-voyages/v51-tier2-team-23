@@ -1,6 +1,9 @@
 //TODO: change all the project so it is based on dataset attribute instead of ids or values? What happens if one of the participant leaves the group?
 //https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
 //https://stackoverflow.com/questions/11563638/how-do-i-get-the-value-of-text-input-field-using-javascript
+//https://github.com/chingu-voyages/v51-tier2-team-23/tree/development
+//https://splittersub.vercel.app/groups/1728599891814
+
 /* DATASET */
 var dataset = [
     {
@@ -66,6 +69,7 @@ var populateFunc = function () {
         //insert a new row
         var rcdRow = table.insertRow(rowCount);
         rcdRow.id = dataset[rcdIdx].recordId;
+        rcdRow.className = "body-row";
         //start populating updateContribs with the record ids as keys
         __updatedContribs[dataset[rcdIdx].recordId] = {};
         //prepare the correponding cells, specific to each column
@@ -160,23 +164,6 @@ var editBtnFunc = function () {
     }
 };
 var updateBtnFunc = function () {
-    /* TODO
-[x]- push also outputs to __updatedContribs[key].newContr (line 218)
-[x]- if edited, push the difference with current output, otherwise 0
-
-[x]- sum new split (line 232)
-
-[x]- go through output again, to update the new values, where the new split is added to the non-edited (from line 236)
-[]- recalcuate the percentage
-
-[x]- update percentages and differences with paid values
-
-    THEN
-[]- do the opposite algorithm for updates on the percentage column
-
-    THEN
-[]- do a simpler algorithm for the paid column
-    */
     //is the AbsSpl col edited?
     if (__selectedCells.checkedColId == 'editAbsSpl') {
         var __outsAbsSpl = __getOutputs('.outAbsSpl');

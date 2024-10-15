@@ -24,11 +24,23 @@
 
         table, thead, tr{
             border-collapse: collapse;
-            border-bottom: 2px solid rgb(140 140 140);
+            /*border-bottom: 2px solid rgb(140 140 140);*/
         }
 
-        thead{
-        background-color: rgb(228 240 245);
+
+        .table-header{
+        /*background-color: rgb(228 240 245);*/
+            background-color: #f5f5f5;
+            font-weight: 700;
+            padding: 10px;
+        }
+
+        .body-row:nth-child(odd){
+            background-color:#f9f9f9;
+        }
+
+        .body-row:nth-child(2n){
+            background-color:#fff;
         }
 
         td{
@@ -62,7 +74,7 @@
         <div class="add-expense-container center">
         <form id="calcForm" action="">
             <table>
-                <thead id="namingTbHeaders">
+                <thead class="table-header" id="namingTbHeaders">
                     <th>Fix</th>
                     <th>Name</th>
                     <th>Weight (%)</th>
@@ -71,7 +83,7 @@
                     <th>To Pay</th>
                     <th>To Pay (%)</th>
                 </thead>
-                <tr id="radioBtnsTHeaders">
+                <tr class="table-header" id="radioBtnsTHeaders">
                     <th class="fix selcol" id="checkboxesTbCol">&nbsp;</th>
                     <th class="name selcol" id="namesTbCol">&nbsp;</th>
                     <th class="split selcol" id="relativeSplitTbCol"><input type="radio" id="editRelSpl" name="fixcol" value="col3"></th>

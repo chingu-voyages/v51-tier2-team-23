@@ -2,9 +2,9 @@
 
 In this branch you will find an unfinished sketch of a proof-of-concept calculator utility as discussed by the team on a meeting back to the second week of Sept-2024. The file can be found as a single [index.html under the `sketchcalc` folder of this branch](https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/sketchcalc/index.html) and [corresponding JS and CSS files under `resources` folder of this branch(https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/resources).
 
-The intention of the sketch was to make a first evaluation of the technical requirements and draw a quick-and-dirty tool that allowed us to identify what was feasible and viable in the time left.
+> This branch focus only on the calculator feature. To see the actual implementation please visit our [development branch](https://github.com/chingu-voyages/v51-tier2-team-23/tree/development).
 
-The project was intentionally done in raw HTML-JS as I was not a React developer and there were members of the team without broad technical knowledge when installing packages.
+The intention of the sketch was to make a first evaluation of the technical requirements and draw a quick-and-dirty tool that allowed us to identify what was feasible and viable in the time left.
 
 This development began during the fourth Sprint and was on the way to a cleaner proposal so it could be shown to the rest of the group for further discussion before suddenly having to stop further development due to personal circunstances.
 
@@ -25,7 +25,7 @@ In the example above, you can see that:
 
 ## How the code looked like
 
-As previously mentioned, the sketch was left as a raw HTML / JS code as it was meant to explore the realization of a more functional project.
+As previously mentioned, the sketch was left as a raw HTML / TS code as it was meant to explore the realization of a more functional project.
 
 A much simple explanation of each of the functionalities in a form of tasks could have been:
 
@@ -52,9 +52,9 @@ During the exploration we found the following points that were to be discussed w
 
 There was still some work on adding good code practices but the patterns that needed to be tackled in order to make the calculator started to emerge from this sketch. Also how to organize the data, the data sources, and the required functionalities.
 
-### The project was left as JS
+### The project was left raw
 
-The choice of JS over TS was originally made to make a quick prototype. When I resumed the development I was not in conditions to work on TS and left the project as JS.
+The project was done in raw HTML-JS as I was not a React developer and there were members of the team without broad technical knowledge when installing packages. The project was later translated into Typescript for overall consistency, but it was not converted into a React component to be inserted into the full project due to unavoidable delays and eventually closing deadlines.
 
 ### The source of data should have come from Participants and/or Group Details
 
@@ -72,4 +72,4 @@ The calculator should not save data on the data file until the user is satisfied
 
 The intention was to explore with the team the feasibility of translating the findings into a cleaner React code and formalize a component that could have been inserted in the full workflow of the app, likely to appear under the Group Details section.
 
-The reality is that this proof-of-concept was not discussed by the team as expected. This sketch was still an alternative to a simpler one proposed by @Tesfaye in his wireframe and the idea was to decide which route to follow after comparing the alternatives. But because we couldn't discuss the feasibility of this sketch and the motivation to go forward either with this proposal, the proposal by @Tesfaye, or any other proposal, the concretization of this sketch as part of the final product vision of the team was not certain.
+The reality is that this proof-of-concept could not be discussed by the team as planned, and could only be resumed the last sprint. This sketch was still an alternative to a simpler one proposed by @Tesfaye in his wireframe and the idea was to decide which route to follow after comparing the alternatives. But because we couldn't discuss the feasibility of this sketch and the motivation to go forward either with this proposal, the proposal by @Tesfaye, or any other proposal, the concretization of this sketch as part of the final product vision of the team was not certain.

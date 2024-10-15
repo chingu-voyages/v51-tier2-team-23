@@ -71,7 +71,9 @@ There was still some work on adding good code practices but the patterns that ne
 
 ### The code can still be improved to minimize redundancies and unrequired data gathering
 
-This was even more obvious after the code analysis using the flow diagrams.
+Although the task was apparently simple, the fact was that there were more than a single way to solve it. There were more than one solution during the exploration that could head to the same result, some of them probably more efficient than others. The code is currently including several of those solutions, without a clear selection of a consistent solution that could lead to a cleaner code with smaller functionalities.
+
+This was made even more evident after the code analysis using the flow diagrams, which appeared to be a useful tool to expose things like redundancies.
 
 ### The source of data should have come from Participants and/or Group Details
 

@@ -69,6 +69,10 @@ During the exploration we found the following points that were to be discussed w
 
 There was still some work on adding good code practices but the patterns that needed to be tackled in order to make the calculator started to emerge from this sketch. Also how to organize the data, the data sources, and the required functionalities.
 
+### The code can still be improved to minimize redundancies and unrequired data gathering
+
+This was even more obvious after the code analysis using the flow diagrams.
+
 ### The source of data should have come from Participants and/or Group Details
 
 For the sketch of the calculator I hardcoded some data inputs, but some of the data is populated automatically from a JS object acting as a dataset at loading. The best source would be the @E_Asiedu data from participants or more likely the Group Details including @E_Asiedu Participants data. That source should update the cells (I used a HTML table for convenience but it can be any other kind of solution).

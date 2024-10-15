@@ -4,13 +4,15 @@ In this branch you will find an unfinished sketch of a proof-of-concept calculat
 
 > This branch focus only on the calculator feature. To see the actual implementation please visit our [development branch](https://github.com/chingu-voyages/v51-tier2-team-23/tree/development).
 
-The intention of the sketch was to make a first evaluation of the technical requirements and draw a quick-and-dirty tool that allowed us to identify what was feasible and viable in the time left.
+The sketch was under **User Story "SCRUM 6"** of our Jira backlog.
+
+The intention of the sketch was to make a first evaluation of the technical requirements of the thought User Story and draw a quick-and-dirty tool that allowed us to identify what was feasible and viable in the time left.
 
 This development began during the fourth Sprint and was on the way to a cleaner proposal so it could be shown to the rest of the group for further discussion before suddenly having to stop further development due to personal circunstances.
 
 ## What the plan was
 
-Our split calculator would have taken all our Participants with data presented on a table format or similar. It could work as follow:
+Based on team discussions, the US SCRUM 6 should consist on a split calculator that should work as follow:
 * It could split evenly the contributions either using relative - percentage - split or absolute contribution; it can also recalculate for updates in payments
 * It would have allowed the editing of more than one Participant
 
@@ -25,7 +27,7 @@ In the example above, you can see that:
 
 ## How the code looked like
 
-As previously mentioned, the sketch was left as a raw HTML / TS code as it was meant to explore the realization of a more functional project.
+As previously mentioned, the development of the User Story was left as a raw HTML / TS code as it was meant to explore the realization of a more functional project.
 
 A much simple explanation of each of the functionalities in a form of tasks could have been:
 
@@ -72,4 +74,4 @@ The calculator should not save data on the data file until the user is satisfied
 
 The intention was to explore with the team the feasibility of translating the findings into a cleaner React code and formalize a component that could have been inserted in the full workflow of the app, likely to appear under the Group Details section.
 
-The reality is that this proof-of-concept could not be discussed by the team as planned, and could only be resumed the last sprint. This sketch was still an alternative to a simpler one proposed by @Tesfaye in his wireframe and the idea was to decide which route to follow after comparing the alternatives. But because we couldn't discuss the feasibility of this sketch and the motivation to go forward either with this proposal, the proposal by @Tesfaye, or any other proposal, the concretization of this sketch as part of the final product vision of the team was not certain.
+The reality is that this proof-of-concept could not be discussed by the team as planned, and could only be resumed during the last sprint. This sketch was still an alternative to a simpler one proposed by @Tesfaye in his wireframe and the idea was to decide which route to follow after comparing the alternatives. But because we couldn't discuss the feasibility of this sketch and the motivation to go forward either with this proposal, the proposal by @Tesfaye, or any other proposal, the concretization of this sketch as part of the final product vision of the team was not certain.

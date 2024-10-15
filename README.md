@@ -2,9 +2,9 @@
 
 In this branch you will find an unfinished sketch of a proof-of-concept calculator utility as discussed by the team on a meeting back to the second week of Sept-2024. The file can be found as a single [index.html under the `sketchcalc` folder of this branch](https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/sketchcalc/index.html) and [corresponding JS and CSS files under `resources` folder of this branch](https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/resources).
 
-> This branch focus only on the calculator feature. To see the actual implementation please visit our [development branch](https://github.com/chingu-voyages/v51-tier2-team-23/tree/development).
-
 The sketch was under **User Story "SCRUM 6"** of our Jira backlog.
+
+> This branch focus only on the calculator feature. To see the actual implementation please visit our [development branch](https://github.com/chingu-voyages/v51-tier2-team-23/tree/development).
 
 The intention of the sketch was to make a first evaluation of the technical requirements of the thought User Story and draw a quick-and-dirty tool that allowed us to identify what was feasible and viable in the time left.
 

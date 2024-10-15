@@ -1,129 +1,158 @@
 @startuml
 start
-#e9fffc:Get Total Allotment;
-#lightgreen:run **init**;
-end
-partition "**function** init"{
+:Initialization;
+#e9fffc:Instantiate dataset;
+#e9fffc:Get recordIds from the dataset;
+#e9fffc:Instantiate empty data collectors;
 note right
-    NOTE func **init**
-    ====
-    This function runs when loading.
-	
-	The function set all output cells
-	into a default even partition.
-	For a more formal implementation this
-	function should read an external dataset.
+__selectedCells and __updatedContribs objs
+end note
+#e9fffc:Get Total Allotment;
+#e9fffc:Instantiate a **function**
+to collect Editable cells ("Editables");
+#e9fffc:Instantiate a **function**
+to collect the Output cells;
+#lightpink:Declare populateFunc;
+#lightpink:Declare __getCheckedColRows;
+#lightpink:Declare editBtnFunc;
+#lightpink:Declare updateBtnFunc;
+#lightgreen:run **populateFunc**;
+end
+@endtuml
+
+@startuml
+partition "**function** populateFunc"{
+note right
+NOTE **populateFunc**
+====
+This function runs at laoding.
+It completes the table with rows
+as records of the dataset.
+It also add the listeners and 
+pre-set some of the temporary 
+data collections.
 end note
 start
+:Check for table existence (if not, throw error)
 #lightblue:Calculate Even Contribution: Split;
 #lightblue:Calculate Even Contribution: Percentage;
-#fce9ff:Find all output elements (spans) 
- and there row/column;
-#lightgreen:Update Contributions and Percentages
- by row and column;
+#skyblue:Iterate through the dataset 
+and populate the table;
+note right
+declare corresponding attributes
+insert output values by cell
+insert input elements when editable
+end note
+#lightgreen:Attach event listeners (buttons);
 end
 }
-partition "**function** updateCol - responds to __m0fixcol__ button"{
+@enduml
+
+@startuml
+partition "**function** __getCheckedColRows"{
 note right
-    NOTE func updateCol
-    ====
-    responds to EVENT __m0fixcol__ Button
-	This function is about
-    about showing edited cells 
-	and capturing inputs
+NOTE **__getCheckedColRows**
+====
+This function helps to determine
+which rows and columns have been selected
+by the user, storing that information for later
+use in the editing process
 end note
-start
-#e9fffc:Get all the html Form inputs
- as ALL LIST OF INPUTS;
-#e9fffc:Get all radios (the columns);
-#e9fffc:Get all checkboxes (the rows);
-#fce9ff:Filter checked radio (only one column) 
-and checkboxes (multiple rows);
-note right
-	The cells under 
-	checked radio 
-	and checkboxes 
-	are the ones edited
-end note
-repeat :loop over ALL LIST OF INPUTS;
-if (INPUT ID match col/row ref?) then (yes)
-:Show input field;
+#e9fffc:Select Radio and Checkbox Inputs;
+#e9fffc:Retrieve Checked Inputs;
+if(Checked Inputs?) then (yes)
+#e9fffc:Store Selected Values;
+#lightgreen:Update row count;
+#e9fffc:Collect Editable Cells;
+:Return true;
 else (no)
-:Hide input field;
+:Return false;
 endif
-repeat while (still INPUTS?) is (Yes) not (No)
 end
 }
-partition "**function** update - responds to the __m0form__ button"{
+partition "**function** editBtnFunc"{
 note right
-    NOTE func update
-    ====
-    responds to EVENT __m0form__ Button
-	This function is about
-    collecting inputs from updated cells,
-	recalculating partitions,
-	and updating output cells accordingly
+NOTE **editBtnFunc**
+====
+This function is an event of "Edit" button
+It roles is to show the input fields for the
+cells the user has selected
 end note
 start
-#e9fffc:Get all the html Form inputs
- as ALL LIST OF INPUTS;
-#e9fffc:Get all inputs with number type
-as LIST OF NUMBER TYPE INPUTS;
-#e9fffc:Get all radios (the columns);
-#e9fffc:Get all checkboxes (the rows);
-#fce9ff:Filter checked radio (only one column) 
-and checkboxes (multiple rows);
+:Initialization;
+#lightgreen:Run __getCheckedColRows;
 note right
-	The cells under 
-	checked radio 
-	and checkboxes 
-	are those edited
-	(SAME AS PREVIOUS FUNCTION)
+If no cells retrieved, quit
 end note
-#e9fffc:Get all current outputs (span HTML Elements);
-#e9fffc:Initialize an empty Contribution object
-as **newContr**;
+#skyblue:Loop, find and display 
+input fields for selected cells;
 note right
-	this object will keep track of the 
-	updated data. Keys are the col/row refs.
-	There are properties collecting contribution
-	values and statuses.
+Compare HTMLElement id to col and rows ref ids
+as collected when running __getCheckedColRows
 end note
-#e9fffc:Initialize a Split counter;
+end
+}
+@enduml
+
+@startuml
+partition "**function** updateBtnFunc"{
 note right
-	This counter is needed to count
-	the number of not edited Participants
-	so we can eventually calculate the remaining 
-	split amount between them
+NOTE **updateBtnFunc**
+====
+This function is an event of "Update" button
+It roles is to collect the inputs by the user
+recalculate the values and update the whole
+table accordingly before resetting all the 
+temporary data collectors
 end note
-repeat :loop over LIST OF NUMBER TYPE INPUTS
--> //Visiting only editable cells (number types)//;
-if (INPUT ID match edited cells ID?) then (yes)
-#lightgreen:Update **newContr** by key with 
-property values corresponding to 
-edited cells;
-else (no)
-#lightgreen:Update **newContr** by key with 
-property values corresponding to 
-to-Split data;
-endif
-repeat while (still INPUTS?) is (Yes) not (No)
-repeat :loop over All INPUT LIST;
-#e9fffc:Get (part of) the INPUT ID;
-if (INPUT ID match edited cells ID?) then (yes)
-:Collect current absolute contribution
-on the **newContr** object based on ID;
-else (no)
-:Assign 0 otherwise;
-endif
-repeat while (still INPUTS?) is (Yes) not (No)
-#lightblue:Calculate remaining contribution
-(previousContr - currentContr) 
-of edited Participants using 
-data collected on **newContr** obj;
+start
+:Initialization;
+:Check Selected Column (absolute -, 
+relative splits or paid amounts);
+#e9fffc:Collect Inputs for Editables accordingly;
+if (is AbsSplt col?) then (yes)
+#e9fffc:Get Outputs of that column;
+#skyblue:Loop the Editables;
+#lightgreen:Update __updateContrbs container 
+with modified contribution while looping;
+#skyblue:Loop the Outputs;
+#lightgreen:Update __updateContrbs container 
+with modified contribution while looping;
+#lightgreen:Calculate the differences btw
+current and previous contribs;
+#e9fffc:Get Outputs of other columns;
 #lightblue:Split the remaining contribution
 evenly between the rest of the Participants;
-#lightgreen:Update output (HTML span);
+#lightgreen:Update outputs (HTML span);
+elseif (is RelSplt col?) then (yes)
+#e9fffc:Get Outputs of that column;
+#skyblue:Loop the Editables;
+#lightgreen:Update __updateContrbs container 
+with modified contribution while looping;
+#skyblue:Loop the Outputs;
+#lightgreen:Update __updateContrbs container 
+with modified contribution while looping;
+#lightgreen:Calculate the differences btw
+current and previous contribs;
+#lightgreen:Convert percentages to absolute 
+contributions;
+#e9fffc:Get Outputs of other columns;
+#lightblue:Split the remaining contribution
+evenly between the rest of the Participants;
+#lightgreen:Update outputs (HTML span);
+elseif (is Paid?) then (yes)
+#e9fffc:Get Outputs of that column;
+#skyblue:Loop the Editables;
+#e9fffc:Get Outputs of other columns;
+#skyblue:Loop the Outputs;
+#lightgreen:Update Output columns with same array 
+index with modified contribution while looping;
+note right
+Here there is no need of calculating a split
+end note
+endif
+#lightgreen: Cleanup all the containers and set
+to initial state;
 end
 }
 @enduml

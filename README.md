@@ -56,7 +56,7 @@ There was still some work on adding good code practices but the patterns that ne
 
 ### The project was left raw
 
-The project was done in raw HTML-JS as I was not a React developer and there were members of the team without broad technical knowledge when installing packages. The project was later translated into Typescript for overall consistency, but it was not converted into a React component to be inserted into the full project due to unavoidable delays and eventually closing deadlines.
+The project was initially done in raw HTML-JS as I was not a React developer and there were members of the team without broad technical knowledge when installing packages. The project was later translated into Typescript for overall consistency, but it was not converted into a React component so it could be inserted into the full project due to unavoidable delays and eventually closing deadlines.
 
 ### The source of data should have come from Participants and/or Group Details
 

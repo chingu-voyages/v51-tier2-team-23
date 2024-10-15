@@ -29,6 +29,10 @@ In the example above, you can see that:
 
 As previously mentioned, the development of the User Story was left as a raw HTML / TS code as it was meant to explore the realization of a more functional project.
 
+In general, at its highest scope the code is organized as shown bellow:
+
+![](/resources/img/globalVarAndActions.svg)
+
 A much simple explanation of each of the functionalities in a form of tasks could have been:
 
 ### `populateFunc` function
@@ -37,14 +41,25 @@ Always default to:
 
 > take the total allotment (a global hardcoded value), populate the table, count the number of "participants" and split the contributions evenly between them (absolute as well as percentages).
 
+The following flow diagram provides more details about the code:
+
+![](/resources/img/populateFunc.svg)
+
 ### `editBtnFunc` function
 
 > Make editable the cells of the table based on the user's selection of a column (in this sketch only available for the absolute contributions column), and the "participants".
+
+The following flow diagram provides more details about the code:
+
+![](/resources/img/editBtnFunc.svg)
 
 ### `updateBtnFunc` function
 
 > Once the user has inputed either new (absolute / relative) contributions or payments for the selected "participants", update their contribution/payment and, if another contribution, split evenly the remaining contribution between the non-edited "participants".
 
+The following flow diagram provides more details about the code:
+
+![](/resources/img/updateBtnFunc.svg)
 
 ## What we found
 

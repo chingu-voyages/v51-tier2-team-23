@@ -1,7 +1,8 @@
 # Splitit App - User Story SCRUM 6 -- Sketch / proof-of-concept Calculator Feature
 
 ///////////////////////////////////
-#EDIT: Code was recently updated (18/10/24) but not README
+
+#### EDIT: Code was recently updated (18/10/24) but not README
 * new types were created for better readability
 * comments were added across the code as an effort to help other team members to understand the implementation
 * deleted some unused features

@@ -7,6 +7,7 @@
 * deleted some unused features
 * new function (`__newContrAndSumSpltFunc`) was added to reduce redundancy
 * some local variables were moved to global scope to facilitate handling - hack -
+* a few changes to style to be even more in sync with MVP
 
 Observations:
 - The code use functions that update stateful global-scope containers

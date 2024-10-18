@@ -5,10 +5,14 @@
 /* INTERFACES */
 ////////////////
 
-/* interface ArrayConstructor: this is a hack - 
-I won't be able to set TS for ES6 or later and 
-the existing configuration was not accepting 
-some new Array methods */
+/**
+ * this is a hack - I won't be able 
+ * to set TS for ES6 or later and the 
+ * existing configuration was not accepting 
+ * some new Array methods
+ * 
+ * @interface
+ */
 interface ArrayConstructor {
 
     from<T, U>(arrayLike: ArrayLike<T>, filter: (v: T, k: number) => U, thisArg?: any): Array<U>;
@@ -19,35 +23,57 @@ interface ArrayConstructor {
 /* TYPES */
 ///////////
 
-/* SelectedCellsCoord type: collect data 
-about the coordinates of the selected cells 
-using radio and checkboxes inputs, 
-as well as the shown number inputs 
-selected (editableCells) */
+/**
+ * SelectedCellsCoord type: collect data 
+ * about the coordinates of the selected cells 
+ * using radio and checkboxes inputs, 
+ * as well as the shown number inputs 
+ * selected (editableCells)
+ * 
+ * @typedef SelectedCellsCoord
+ * @type {object}
+ * @property {?string} checkColId - an ID
+ * @property {string[]} checkedRowIds - list of IDs
+ * @property {number} rowCount - the last row
+ * @property {NodeListOf<HTMLFormElement> | []} editableCells - list of selected number inputs
+ */
+
 type SelectedCellsCoord = {
     checkedColId: string | null,
-    checkedRowIds: String[],
+    checkedRowIds: string[],
     rowCount: number,
     editableCells: NodeListOf<HTMLFormElement> | []
 }
 
-/* ContribsValues type: it will temporary contain
-the contributions so we can keep them for 
-further maths operations */
-
+/** 
+ * ContribsValues type: it will temporary contain 
+ * the contributions so we can keep them for 
+ * further maths operations 
+ * 
+ * @typedef ContribsValues
+ * @type {object}
+ * @property {number[]} newContr - a list of 3 values, in that order: [modified contribution or 0, current contribution, current contribution - modified contribution]
+ * @property {boolean} edited - if the cell was edited (true) or not (false)
+ */
 type ContribsValues = {
     newContr:number[],
     edited:boolean
 
 }
 
-/* updateContribs type: start as empty
-but it will be populated with inner objects
-with rowids as indexes.
-The inner objects will temporary contain
-the contributions so we can keep them for 
-further maths operations */
 
+/**
+ * updateContribs type: start as empty
+ * but it will be populated with inner objects
+ * with rowids as indexes.
+ * The inner objects will temporary contain
+ * the contributions so we can keep them for 
+ * further maths operations
+ * 
+ * @typedef UpdatedContribs
+ * @type {object}
+ * @property {ContribsValues | any} - key is rowId
+ */
 type UpdatedContribs = {
     [index:string]: ContribsValues | any
 }
@@ -56,7 +82,9 @@ type UpdatedContribs = {
 /* DATA INITIALIZATION */
 /////////////////////////
 
-/* FAKE DATASET */
+/**
+ * FAKE DATASET 
+*/
 let dataset = [
 {
     name: 'Quien',
@@ -88,7 +116,6 @@ let dataset = [
 /* DATA COLLECTORS and CONSTANTS */
 ///////////////////////////////////
 
-/* __selectedCells object is type SelectedCellsCoord */
 let __selectedCells: SelectedCellsCoord = {
     checkedColId: null,
     checkedRowIds: [],
@@ -97,18 +124,16 @@ let __selectedCells: SelectedCellsCoord = {
 }
 
 
-/* __updateContribs object: start as empty
-but it will be populated with inner objects
-with row ids as key.
-The inner objects will temporary contain
-the contributions so we can keep them for 
-further maths operations */
 let __updatedContribs:UpdatedContribs = {} 
 
-/* __recordIds rows Ids */
+/** 
+ * @description __recordIds rows Ids 
+ */
 let __recordIds = dataset.map((v,i)=>{return v.recordId;});
 
-__recordIds
+/** 
+ * @description cTotsel collects the total allotment from the HTML (hardcoded) 
+ */
 let cTotsel:HTMLElement | null = document.getElementById("tot");
 let cTot:number;
 if(cTotsel){
@@ -117,36 +142,42 @@ if(cTotsel){
     throw('HtmlElement null');
 }
 
-/* __numberOfSplits will count the number of participants
-that were not selected by the user. We will need that info
-to split the remaining  */
+/**
+ * @description  __numberOfSplits will count the number of participants that were not selected by the user. We will need that info to split the remaining  
+ */
 let __numberOfSplits = 0;
+
+/**
+ * @description __sumNewSplit will collect the total remainings left by those with modified outputs
+ */
 let __sumNewSplit = 0;
 
 /* CONSTANTS and GLOBAL-USE ELEMENTS */
 
 let table = document.querySelector("table");
 
-/*__getEditables function will get all editable inputs (.editable class) */
+/**
+ * @function
+ * @description __getEditables function will get all editable HTML number inputs (.editable class)
+ */
 let __getEditables = function():NodeListOf<HTMLFormElement>{return document.querySelectorAll('.editable')}; 
 
-/*__getOutputs function will get all outputs per column id */
+/**
+ * @function
+ * @param {string} selColId
+* @description __getOutputs function will get all outputs per column id
+ */
 let __getOutputs = function(selColId:string):NodeListOf<Element>{return document.querySelectorAll(selColId)};
 
 /////////////////////
 /* FUNCTIONALITIES */
 /////////////////////
 
-/*
-populatedFunc function:
-
-This function runs at laoding.
-It completes the table with rows
-as records of the dataset.
-It also add the listeners and 
-pre-set some of the temporary 
-data collections.
-*/
+/**
+ * @function 
+ * @description This function runs at laoding. It completes the table with rows as records of the dataset. It also add the listeners and pre-set some of the temporary data collections.
+ * 
+ */
 let populateFunc = function(){ //create table
 
     let rowCount:number;
@@ -232,13 +263,10 @@ let populateFunc = function(){ //create table
     }
 }
 
-/*
-__getCheckedColRows function:
-This function helps to determine
-which rows and columns have been selected
-by the user, storing that information for later
-use in the editing process
-*/
+/**
+ * @function
+ * @description This function helps to determine which rows and columns have been selected by the user, storing that information for later use in the editing process
+ */
 function __getCheckedColRows(){
     let radios = document.querySelectorAll('input[type="radio"]') as NodeListOf<HTMLInputElement>;
     let checkboxes = document.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
@@ -262,12 +290,10 @@ function __getCheckedColRows(){
     }
 }
 
-/*
-editBtnFunc function:
-This function is an event of "Edit" button
-It roles is to show the input fields for the
-cells the user has selected
-*/
+/**
+ * @function
+ * @description This function is an event of "Edit" button. It roles is to show the input fields for the cells the user has selected
+ */
 let editBtnFunc = function(){
     
     //populate __selectedCells using the __getCheckedColRows function
@@ -290,14 +316,14 @@ let editBtnFunc = function(){
     }
 }
 
-/* newContrAndSumSpltFunc function:
-
-this function updates the following global variables:
+/**
+ * @function
+ * @param {NodeListOf<Element>} selOutput
+ * @description This function updates the following global variables:
 ---  __updatedContribs object with the new values of the edited / non-edited cells by row (id);
 --- count the number of non-edited participants (__numberOfSplits)
 --- and after getting all the data calculates the __sumNewSplit value
 */
-
 let __newContrAndSumSpltFunc = function(selOutput:NodeListOf<Element>){
 
     // get data from edited cells and keep it in __updatedContribs
@@ -335,13 +361,10 @@ let __newContrAndSumSpltFunc = function(selOutput:NodeListOf<Element>){
     __sumNewSplit = Object.keys(__updatedContribs).map((k,i)=>{if(__updatedContribs[k].edited){return __updatedContribs[k].newContr[2]}}).filter((v,i)=>{return v != undefined}).reduce((acc, b)=>{return acc+b});
 }
 
-/*
-updateBtnFunc function:
-This function is an event of "Update" button
-It roles is to collect the inputs by the user
-recalculate the values and update the whole
-table accordingly before resetting all the 
-temporary data collectors
+/**
+ * @function
+ * @description This function is an event of "Update" button. It roles is to collect the inputs by the user recalculate the values and update the whole 
+ * table accordingly before resetting all the temporary data collectors
 */
 let updateBtnFunc = function(){
 

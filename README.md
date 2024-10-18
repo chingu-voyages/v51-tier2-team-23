@@ -1,5 +1,20 @@
 # Splitit App - User Story SCRUM 6 -- Sketch / proof-of-concept Calculator Feature
 
+///////////////////////////////////
+#EDIT: Code was recently updated (18/10/24) but not README
+* new types were created for better readability
+* comments were added across the code as an effort to help other team members to understand the implementation
+* deleted some unused features
+* new function (`__newContrAndSumSpltFunc`) was added to reduce redundancy
+* some local variables were moved to global scope to facilitate handling - hack -
+
+Observations:
+- The code use functions that update stateful global-scope containers
+- Functions are still not completely agnostic, and therefore can not be decoupled from their sources
+- To decouple the functions, one thing that should be done is to evaluate the mechanics of how to get the entering ids, which it is currently set to only responding to my implementation - a string split of rowIds; this can be easily changed
+
+////////////////////////////////////
+
 In this branch you will find an unfinished sketch of a proof-of-concept calculator utility as discussed by the team on a meeting back to the second week of Sept-2024. The file can be found as a single [index.html under the `sketchcalc` folder of this branch](https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/sketchcalc/index.html) and [corresponding JS and CSS files under `resources` folder of this branch](https://github.com/chingu-voyages/v51-tier2-team-23/tree/sketchcalc/resources).
 
 The sketch was under **User Story "SCRUM 6"** of our Jira backlog.

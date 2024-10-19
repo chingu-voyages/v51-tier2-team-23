@@ -2,6 +2,19 @@
 
 ///////////////////////////////////
 
+#### EDIT: Code was recently updated (19/10/24) but not README
+
+* col and row ids now set to work based on the HTML data-* attribute
+* creating new functions to make the dev more compact and to reduce redundancies; eg. `__absOrrelSplFunc`
+* improving namings and removing some non-used variables / settings
+* introduction of new buttons (SAVE, CANCEL), and some logic to hide / show the buttons (see new gif).
+
+![](/resources/img/sketchCalc02.gif)
+
+////////////////////////////////////
+
+///////////////////////////////////
+
 #### EDIT: Code was recently updated (18/10/24) but not README
 * new types were created for better readability
 * comments were added across the code as an effort to help other team members to understand the implementation

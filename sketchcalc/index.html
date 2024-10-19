@@ -64,6 +64,8 @@
         input[type="number"]{
             display:none;
         }
+
+
     </style>
     <body>
         <div class="total">
@@ -75,7 +77,7 @@
         <form id="calcForm" action="">
             <table>
                 <thead class="table-header" id="namingTbHeaders">
-                    <th>Fix</th>
+                    <th>&nbsp;</th>
                     <th>Name</th>
                     <th>Weight (%)</th>
                     <th>Owed</th>
@@ -84,7 +86,7 @@
                     <th>To Pay (%)</th>
                 </thead>
                 <tr class="table-header" id="radioBtnsTHeaders">
-                    <th class="fix selcol" id="checkboxesTbCol">&nbsp;</th>
+                    <th class="chbox selcol" id="checkboxesTbCol">&nbsp;</th>
                     <th class="name selcol" id="namesTbCol">&nbsp;</th>
                     <th class="split selcol" id="relativeSplitTbCol"><input type="radio" id="editRelSpl" name="fixcol" value="col3"></th>
                     <th class="econtr selcol" id="absoluteSplitTbCol"><input type="radio" id="editAbsSpl" name="fixcol" value="col4"></th>
@@ -94,7 +96,9 @@
                 </tr>
             </table>
             <input class="add-expense-button" id="editBtn" type="button" value="Edit">
-            <input class="add-expense-button" id="updateBtn" type="button" value="Update">
+            <input class="add-expense-button" id="updateBtn" type="button" value="Update" hidden>
+            <button class="add-expense-button" id="saveBtn" type="button" value="Save" style="background-color:green;" hidden>Save</button>
+            <button class="add-expense-button" id="cancelBtn" type="button" value="Cancel" style="background-color:grey;" hidden>Cancel</button>
         </form>
     </div>
     </body>

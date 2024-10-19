@@ -42,7 +42,7 @@ type SelectedCellsCoord = {
     checkedColId: string | null,
     checkedRowIds: string[],
     rowCount: number,
-    editableCells: NodeListOf<HTMLFormElement> | []
+    colOfEditedCells: NodeListOf<HTMLFormElement> | []
 }
 
 /** 
@@ -120,16 +120,22 @@ let __selectedCells: SelectedCellsCoord = {
     checkedColId: null,
     checkedRowIds: [],
     rowCount: -1,
-    editableCells: []
+    colOfEditedCells: []
 }
 
 
 let __updatedContribs:UpdatedContribs = {} 
 
 /** 
- * @description __recordIds rows Ids 
+ * @description __recordIds rows and columns Ids; class assigments
  */
 let __recordIds = dataset.map((v,i)=>{return v.recordId;});
+let __columnIdsIn = ['editRelSpl', 'editAbsSpl','editPaid'];
+let __columnIdsOut = ['outRelSpl', 'outAbsSpl', 'outPaid', 'outAbsRem', 'outRelRem'];
+let __editablesClass = 'editable';
+let __editableColClass = __columnIdsIn;
+let __outputsClass = 'output';
+let __outputColClass = __columnIdsOut;
 
 /** 
  * @description cTotsel collects the total allotment from the HTML (hardcoded) 
@@ -158,9 +164,17 @@ let table = document.querySelector("table");
 
 /**
  * @function
+ *  * @param {string} selEditClass - a class assigned to the number inputs of the table
  * @description __getEditables function will get all editable HTML number inputs (.editable class)
  */
-let __getEditables = function():NodeListOf<HTMLFormElement>{return document.querySelectorAll('.editable')}; 
+let __getEditables = function(selEditClass:string):NodeListOf<HTMLFormElement>{return document.querySelectorAll(selEditClass)}; 
+
+/**
+ * @function
+ *  * @param {string} selEditClass - a class assigned to the number inputs of the table
+ * @description __getEditables function will get all editable HTML number inputs (.editable class)
+ */
+let __getElemByColIds = function(selColId:string):NodeListOf<HTMLFormElement>{return document.querySelectorAll(selColId)}; 
 
 /**
  * @function
@@ -209,40 +223,33 @@ let populateFunc = function(){ //create table
         //NOTICE THE IMPORTANCE of assigning the correpct ids and classes
         let rcdCBoxCell = rcdRow.insertCell(0);
         rcdCBoxCell.id = dataset[rcdIdx].recordId + '-checkboxCell';
-        rcdCBoxCell.headers = 'checkboxesTbCol';
-        rcdCBoxCell.innerHTML = `<input type='checkbox' id='${ dataset[rcdIdx].recordId}-checkbox'></input>`;
+        rcdCBoxCell.innerHTML = `<input type='checkbox' id='${ dataset[rcdIdx].recordId}'></input>`;
 
         let rcdNameCell = rcdRow.insertCell(1);
         rcdNameCell.id = dataset[rcdIdx].recordId + '-nameCell';
-        rcdNameCell.headers = 'namesTbCol';
         rcdNameCell.innerHTML = dataset[rcdIdx].name;
 
         let rcdRelSplCell = rcdRow.insertCell(2);
         rcdRelSplCell.id = dataset[rcdIdx].recordId + '-relsplCell';
-        rcdRelSplCell.headers = 'editRelSpl';
-        rcdRelSplCell.innerHTML = `<input class='editable editRelSpl' type='number' name='spl' id='${dataset[rcdIdx].recordId}-editRelSpl' min='0' max='100'><span class='output outRelSpl' id='${dataset[rcdIdx].recordId}-outRelSpl'>${eqPer}</span>`;
+        rcdRelSplCell.innerHTML = `<input class='${__editablesClass} ${__editableColClass[0]}' type='number' name='spl' id='${dataset[rcdIdx].recordId}-${__columnIdsIn[0]}' data-column='${__columnIdsIn[0]}' data-row='${dataset[rcdIdx].recordId}' min='0' max='100'><span class='${__outputsClass} ${__outputColClass[0]}' id='${dataset[rcdIdx].recordId}-${__columnIdsOut[0]}' data-column='${__columnIdsOut[0]}' data-row='${dataset[rcdIdx].recordId}'>${eqPer}</span>`;
 
         let rcdAbsSplCell = rcdRow.insertCell(3);
         rcdAbsSplCell.id = dataset[rcdIdx].recordId + '-abssplCell';
-        rcdAbsSplCell.headers = 'editAbsSpl';
-        rcdAbsSplCell.innerHTML = `<input class='editable editAbsSpl' type='number' name='spl' id='${dataset[rcdIdx].recordId}-editAbsSpl' min='0' max='100'><span class='output outAbsSpl' id='${dataset[rcdIdx].recordId}-outAbsSpl'>${eqCon}</span>`;
+        rcdAbsSplCell.innerHTML = `<input class='${__editablesClass} ${__editableColClass[1]}' type='number' name='spl' id='${dataset[rcdIdx].recordId}-${__columnIdsIn[1]}' data-column='${__columnIdsIn[1]}' data-row='${dataset[rcdIdx].recordId}' min='0' max='100'><span class='${__outputsClass} ${__outputColClass[1]}' id='${dataset[rcdIdx].recordId}-${__columnIdsOut[1]}' data-column='${__columnIdsOut[1]}' data-row='${dataset[rcdIdx].recordId}'>${eqCon}</span>`;
 
         let rcdPaidCell = rcdRow.insertCell(4);
         rcdPaidCell.id = dataset[rcdIdx].recordId + '-rcdPaidCell';
-        rcdPaidCell.headers = 'editPaid';
-        rcdPaidCell.innerHTML = `<input class='editable editPaid' type='number' name='spl' id='${dataset[rcdIdx].recordId}-editPaid' min='0' max='100'><span class='output outPaid' id='${dataset[rcdIdx].recordId}-outPaid'>${dataset[rcdIdx].paid}</span>`;
+        rcdPaidCell.innerHTML = `<input class='${__editablesClass} ${__editableColClass[2]}' type='number' name='spl' id='${dataset[rcdIdx].recordId}-${__columnIdsIn[2]}' data-column='${__columnIdsIn[2]}' data-row='${dataset[rcdIdx].recordId}' min='0' max='100'><span class='${__outputsClass} ${__outputColClass[2]}' id='${dataset[rcdIdx].recordId}-${__columnIdsOut[2]}' data-column='${__columnIdsOut[2]}' data-row='${dataset[rcdIdx].recordId}'>${dataset[rcdIdx].paid}</span>`;
 
         let rcdAbsRemCell = rcdRow.insertCell(5);
         rcdAbsRemCell.id = dataset[rcdIdx].recordId + '-rcdAbsRemCell';
-        rcdAbsRemCell.headers = 'absoluteRemainingTbCol';
         let toPay = eqCon - dataset[rcdIdx].paid;
-        rcdAbsRemCell.innerHTML = `<span class='output outAbsRem' id='${dataset[rcdIdx].recordId}-outAbsRem'>${toPay}</span>`;
+        rcdAbsRemCell.innerHTML = `<span class='${__outputsClass} ${__outputColClass[3]}' id='${dataset[rcdIdx].recordId}-${__columnIdsOut[3]}' data-column='${__columnIdsOut[3]}' data-row='${dataset[rcdIdx].recordId}'>${toPay}</span>`;
 
         let rcdRelRemCell = rcdRow.insertCell(6);
         rcdRelRemCell.id = dataset[rcdIdx].recordId + '-rcdRelRemCell';
-        rcdRelRemCell.headers = 'relativeRemainingTbCol';
         let toPayPer = Math.ceil(toPay*100/eqCon);
-        rcdRelRemCell.innerHTML = `<span class='output outRelRem' id='${dataset[rcdIdx].recordId}-outRelRem'>${toPayPer}</span>`;
+        rcdRelRemCell.innerHTML = `<span class='${__outputsClass} ${__outputColClass[4]}' id='${dataset[rcdIdx].recordId}-${__columnIdsOut[4]}' data-column='${__columnIdsOut[4]}' data-row='${dataset[rcdIdx].recordId}'>${toPayPer}</span>`;
 
         //go to the following row
         rowCount = table.rows.length;
@@ -251,15 +258,30 @@ let populateFunc = function(){ //create table
     //Attach event listeners (buttons)
     const editBtn = document.querySelector('#editBtn');
     const updateBtn = document.querySelector('#updateBtn');
+    const saveBtn = document.querySelector('#saveBtn');
+    const cancelBtn = document.querySelector('#cancelBtn');
     if(editBtn){
         editBtn.addEventListener('click', editBtnFunc);
     }else{
         throw('editt button not found');
     }
+    
     if(updateBtn){
         updateBtn.addEventListener('click', updateBtnFunc);
     }else{
         throw('update button not found');
+    }
+
+    if(saveBtn){
+        saveBtn.addEventListener('click', saveBtnFunc);
+    }else{
+        throw('save button not found');
+    }
+    
+    if(cancelBtn){
+        cancelBtn.addEventListener('click', cancelBtnFunc);
+    }else{
+        throw('cancel button not found');
     }
 }
 
@@ -279,13 +301,13 @@ function __getCheckedColRows(){
         return false;
     }else{
         __selectedCells.checkedColId = checkedCol[0].id;
-        __selectedCells.checkedRowIds = checkedRows.map((v,i)=> {return (v.id).split('-')[0]});
+        __selectedCells.checkedRowIds = checkedRows.map((v,i)=> {return v.id});
         if(table){
             __selectedCells.rowCount = table.rows.length;
         }else{
             throw('table not found');
         }
-        __selectedCells.editableCells = document.querySelectorAll("." + __selectedCells.checkedColId);
+        __selectedCells.colOfEditedCells = document.querySelectorAll("." + __selectedCells.checkedColId);
         return true;
     }
 }
@@ -304,15 +326,42 @@ let editBtnFunc = function(){
     }    
 
     //go through all editable cells; if marked as selected, display the Edit field
-    let editables = __getEditables();
+    let editables = __getEditables('.editable');
     for(let editIdx = 0; editIdx < editables.length; editIdx++){
-        let editableID:string = (editables[editIdx].id).split('-')[0];
 
-        if(__selectedCells.checkedRowIds.indexOf(editableID) != -1 && (editables[editIdx].id).split('-')[1] === __selectedCells.checkedColId){
-            editables[editIdx].style.display = 'inline-block';
-        }else{
-            editables[editIdx].style.display = 'none';
+        //using the HTML dataset attribute
+        let editableRowID:string|undefined = editables[editIdx].dataset.row;
+        let editableColID:string|undefined = editables[editIdx].dataset.column;
+
+        if(editableRowID != undefined && editableColID != undefined){
+            if( __selectedCells.checkedRowIds.indexOf(editableRowID) != -1 && editableColID === __selectedCells.checkedColId){
+                editables[editIdx].style.display = 'inline-block';
+            }else{
+                editables[editIdx].style.display = 'none';
+            }
         }
+    }
+
+    const updateBtn = document.querySelector('#updateBtn') as HTMLFormElement;
+    const cancelBtn = document.querySelector('#cancelBtn') as HTMLFormElement;
+    const saveBtn = document.querySelector('#saveBtn') as HTMLFormElement;
+
+    if(updateBtn){
+        updateBtn.hidden = false;
+    }else{
+        throw('update button not found');
+    }
+    
+    if(saveBtn){
+        saveBtn.hidden = true;
+    }else{
+        throw('save button not found');
+    }
+
+    if(cancelBtn){
+        cancelBtn.hidden = false;
+    }else{
+        throw('cancel button not found');
     }
 }
 
@@ -327,30 +376,41 @@ let editBtnFunc = function(){
 let __newContrAndSumSpltFunc = function(selOutput:NodeListOf<Element>){
 
     // get data from edited cells and keep it in __updatedContribs
-    for(let editedIdx = 0; editedIdx <  __selectedCells.editableCells.length; editedIdx++){
-        let key = (__selectedCells.editableCells[editedIdx].id).split('-')[0];
+    for(let editedIdx = 0; editedIdx <  __selectedCells.colOfEditedCells.length; editedIdx++){
+        
+        //using the HTML dataset attribute
+        let editableRowID:string|undefined = __selectedCells.colOfEditedCells[editedIdx].dataset.row;
 
         //just check if there is a value to see if edited
-        if(__selectedCells.editableCells[editedIdx].value != ''){
-            __updatedContribs[key].newContr = [Number(__selectedCells.editableCells[editedIdx].value)];
-            __updatedContribs[key].edited = true;
-        }else{
-            __updatedContribs[key].newContr = [Number(selOutput[editedIdx].innerHTML)];
-            __updatedContribs[key].edited = false;
-            //count this one another participant that will receive an new split
-            __numberOfSplits += 1;
+        if(editableRowID != undefined){
+            if(__selectedCells.colOfEditedCells[editedIdx].value != ''){
+                __updatedContribs[editableRowID].newContr = [Number(__selectedCells.colOfEditedCells[editedIdx].value)];
+                __updatedContribs[editableRowID].edited = true;
+            }else{
+                __updatedContribs[editableRowID].newContr = [Number(selOutput[editedIdx].innerHTML)];
+                __updatedContribs[editableRowID].edited = false;
+                //count this one another participant that will receive an new split
+                __numberOfSplits += 1;
+            }
         }
     }
 
     //get current contr value and make a first calculation of the differences for the selected participants
     //keep the value as 0 for the not selected ones
     for(let outputIdx = 0; outputIdx <  selOutput.length; outputIdx++){
-        let key = (selOutput[outputIdx].id).split('-')[0];
-        __updatedContribs[key].newContr.push(Number(selOutput[outputIdx].innerHTML));
-        if(__selectedCells.checkedRowIds.indexOf(key) != -1){
-            __updatedContribs[key].newContr.push(__updatedContribs[key].newContr[1]-__updatedContribs[key].newContr[0]);
-        }else{
-            __updatedContribs[key].newContr.push(0);
+        
+        //using the HTML dataset attribute
+        //OBSERVATION: Element type doesn't recognised the dataset attribute, so I had to use getAttribute method instead of dot format
+        //Notice also that for this approach the non-value is "null", while for dot format was "undefined"
+        let outputRowID:string|null = selOutput[outputIdx].getAttribute('data-row');
+
+        if(outputRowID != null){
+            __updatedContribs[outputRowID].newContr.push(Number(selOutput[outputIdx].innerHTML));
+            if(__selectedCells.checkedRowIds.indexOf(outputRowID) != -1){
+                __updatedContribs[outputRowID].newContr.push(__updatedContribs[outputRowID].newContr[1]-__updatedContribs[outputRowID].newContr[0]);
+            }else{
+                __updatedContribs[outputRowID].newContr.push(0);
+            }
         }
     }
 
@@ -368,100 +428,107 @@ let __newContrAndSumSpltFunc = function(selOutput:NodeListOf<Element>){
 */
 let updateBtnFunc = function(){
 
-    //is the AbsSpl col edited?
-    if(__selectedCells.checkedColId == 'editAbsSpl'){
+/**
+ * @function
+ * @param {string} colID - either editRelSpl or editAbsSpl
+ * @description This inner function is to reduce redundancy in the assignment of output values when the user edit relative or absolute splits
+*/
+    let __absOrrelSplFunc = function(colID:string){
+        for(let recordID in __updatedContribs){ //just remember that recordID === rowID
+            for(let outputIdx = 0; outputIdx < __outsEdit.length; outputIdx++) {
         
-        //get output of AbsSplt
-        let __outsAbsSpl = __getOutputs('.outAbsSpl');
-        
-        //update __updatedContrbs obj, __numberOfSplits and __sumNewSplit
-        __newContrAndSumSpltFunc(__outsAbsSpl);
-        
-        
-        //it is time to update the outputs; we collect the corresponding columns
-        //We will iterate through one of them and use the same indexing to update
-        //the other ones
-        let __outsRelSpl = __getOutputs('.outRelSpl');
-        let __outsPaid = __getOutputs('.outPaid');
-        let __outsAbsRem = __getOutputs('.outAbsRem');
-        let __outsRelRem = __getOutputs('.outRelRem');
-        for(let key in __updatedContribs){
-            for(let outputIdx = 0; outputIdx < __outsAbsSpl.length; outputIdx++) {
-                if((__outsAbsSpl[outputIdx].id).indexOf(key) != -1){
-                    if(__updatedContribs[key].edited){
-                        __outsAbsSpl[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[key].newContr[0]));
-                        __outsRelSpl[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[key].newContr[0]*100/cTot));
-                        __outsAbsRem[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[key].newContr[0] - Number(__outsPaid[outputIdx].innerHTML)));
-                        __outsRelRem[outputIdx].innerHTML = String(Math.ceil((__updatedContribs[key].newContr[0] - Number(__outsPaid[outputIdx].innerHTML))*100/__updatedContribs[key].newContr[0]));
-                    }else{
-                        //notice how the even split is made for the non-selected participants
-                        __outsAbsSpl[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[key].newContr[1] + __sumNewSplit/__numberOfSplits));
-                        __outsRelSpl[outputIdx].innerHTML = String(Math.ceil((__updatedContribs[key].newContr[1] + __sumNewSplit/__numberOfSplits)*100/cTot));
-                        __outsAbsRem[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[key].newContr[1] + __sumNewSplit/__numberOfSplits - Number(__outsPaid[outputIdx].innerHTML)));
-                        __outsRelRem[outputIdx].innerHTML = String(Math.ceil((__updatedContribs[key].newContr[1] + __sumNewSplit/__numberOfSplits - Number(__outsPaid[outputIdx].innerHTML))*100/(__updatedContribs[key].newContr[1] + __sumNewSplit/__numberOfSplits)));
+                //using the HTML dataset attribute
+                //OBSERVATION: Element type doesn't recognised the dataset attribute, so I had to use getAttribute method instead of dot format
+                //Notice also that for this approach the non-value is "null", while for dot format was "undefined"
+                let outRowID:string|null = __outsEdit[outputIdx].getAttribute('data-row');
+                if(outRowID != null){
+                    if(outRowID == recordID){
+                        if(__updatedContribs[recordID].edited){
+                            __outsEdit[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[recordID].newContr[0]));
+                            //NOTICE there is a conversion of relative values to absolute to reuse previous code
+                            if(colID == 'editRelSpl'){
+                                __updatedContribs[recordID].newContr = __updatedContribs[recordID].newContr.map((v:number,i:number)=>{return Math.ceil(v/100*cTot)});
+                                __outsToSpl[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[recordID].newContr[0]));
+                            }else{
+                                __outsToSpl[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[recordID].newContr[0]*100/cTot));
+                            }
+                            __outsAbsRem[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[recordID].newContr[0] - Number(__outsPaid[outputIdx].innerHTML)));
+                            __outsRelRem[outputIdx].innerHTML = String(Math.ceil((__updatedContribs[recordID].newContr[0] - Number(__outsPaid[outputIdx].innerHTML))*100/__updatedContribs[recordID].newContr[0]));
+                        }else{
+                            //notice how the even split is made for the non-selected participants
+                            __outsEdit[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[recordID].newContr[1] + __sumNewSplit/__numberOfSplits));
+                            //NOTICE there is a conversion of relative values to absolute to reuse previous code
+                            let __redoNewSplit:number;
+                            if(colID == 'editRelSpl'){
+                                __updatedContribs[recordID].newContr = __updatedContribs[recordID].newContr.map((v:number,i:number)=>{return Math.ceil(v/100*cTot)});
+                                __redoNewSplit = Math.ceil(__sumNewSplit*cTot/100);
+                                __outsToSpl[outputIdx].innerHTML = String(Math.ceil((__updatedContribs[recordID].newContr[1] + __redoNewSplit/__numberOfSplits)));
+                                __outsAbsRem[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[recordID].newContr[1] + __redoNewSplit/__numberOfSplits - Number(__outsPaid[outputIdx].innerHTML)));
+                                __outsRelRem[outputIdx].innerHTML = String(Math.ceil((__updatedContribs[recordID].newContr[1] + __redoNewSplit/__numberOfSplits - Number(__outsPaid[outputIdx].innerHTML))*100/(__updatedContribs[recordID].newContr[1] + __redoNewSplit/__numberOfSplits)));                            
+                            }else{
+                                __outsToSpl[outputIdx].innerHTML = String(Math.ceil((__updatedContribs[recordID].newContr[1] + __sumNewSplit/__numberOfSplits)*100/cTot));
+                                __outsAbsRem[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[recordID].newContr[1] + __sumNewSplit/__numberOfSplits - Number(__outsPaid[outputIdx].innerHTML)));
+                                __outsRelRem[outputIdx].innerHTML = String(Math.ceil((__updatedContribs[recordID].newContr[1] + __sumNewSplit/__numberOfSplits - Number(__outsPaid[outputIdx].innerHTML))*100/(__updatedContribs[recordID].newContr[1] + __sumNewSplit/__numberOfSplits)));
+                            }
+                        }
                     }
                 }
-            }             
+            }
         }
+    }
 
-    //is the RelSpl col edited?
-    //NOTICE that comments are very similar as for editAbsSpl, with a small difference at the moment of updating the values of the table...
-    }else if(__selectedCells.checkedColId == 'editRelSpl'){
+    //it is time to update the outputs; we collect the corresponding columns
+    //We will iterate through one of them and use the same indexing to update
+    //the other ones
 
-        //get output of RelSplt
-        let __outsRelSpl = __getOutputs('.outRelSpl');
-
-        //update __updatedContrbs obj, __numberOfSplits and __sumNewSplit
-        __newContrAndSumSpltFunc(__outsRelSpl);
-
-        //it is time to update the outputs; we collect the corresponding columns
-        //We will iterate through one of them and use the same indexing to update
-        //the other ones
-        let __outsAbsSpl = __getOutputs('.outAbsSpl');
-        let __outsPaid = __getOutputs('.outPaid');
-        let __outsAbsRem = __getOutputs('.outAbsRem');
-        let __outsRelRem = __getOutputs('.outRelRem');
-        for(let key in __updatedContribs){
-            for(let outputIdx = 0; outputIdx < __outsRelSpl.length; outputIdx++) {
-                if((__outsRelSpl[outputIdx].id).indexOf(key) != -1){
-                    if(__updatedContribs[key].edited){
-                        __outsRelSpl[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[key].newContr[0]));
-                        //NOTICE there is a conversion of relative values to absolute to reuse previous code
-                        __updatedContribs[key].newContr = __updatedContribs[key].newContr.map((v:number,i:number)=>{return Math.ceil(v/100*cTot)});
-                        __outsAbsSpl[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[key].newContr[0]));
-                        __outsAbsRem[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[key].newContr[0] - Number(__outsPaid[outputIdx].innerHTML)));
-                        __outsRelRem[outputIdx].innerHTML = String(Math.ceil((__updatedContribs[key].newContr[0] - Number(__outsPaid[outputIdx].innerHTML))*100/__updatedContribs[key].newContr[0]));
-                    }else{
-                        __outsRelSpl[outputIdx].innerHTML = String(Math.ceil((__updatedContribs[key].newContr[1] + __sumNewSplit/__numberOfSplits)));
-                        //NOTICE there is a conversion of relative values to absolute to reuse previous code
-                        __updatedContribs[key].newContr = __updatedContribs[key].newContr.map((v:number,i:number)=>{return Math.ceil(v/100*cTot)});
-                        let redoNewSplit = Math.ceil(__sumNewSplit*cTot/100);
-                        __outsAbsSpl[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[key].newContr[1] + redoNewSplit/__numberOfSplits));
-                        __outsAbsRem[outputIdx].innerHTML = String(Math.ceil(__updatedContribs[key].newContr[1] + redoNewSplit/__numberOfSplits - Number(__outsPaid[outputIdx].innerHTML)));
-                        __outsRelRem[outputIdx].innerHTML = String(Math.ceil((__updatedContribs[key].newContr[1] + redoNewSplit/__numberOfSplits - Number(__outsPaid[outputIdx].innerHTML))*100/(__updatedContribs[key].newContr[1] + redoNewSplit/__numberOfSplits)));
-                    }
-                }
-            }             
-        }
-    }else if(__selectedCells.checkedColId == 'editPaid'){
+    let __outsEdit:NodeListOf<Element>;
+    let __outsToSpl:NodeListOf<Element>; 
+    let __outsPaid = __getOutputs('.outPaid');
+    let __outsAbsRem = __getOutputs('.outAbsRem');
+    let __outsRelRem = __getOutputs('.outRelRem');
+    
+    if(__selectedCells.checkedColId == 'editPaid'){
         
         // get data from edited and NOT edited cells and keep it in __updatedContribs
-        let __outsPaid = __getOutputs('.outPaid');
-        let __outsAbsSpl = __getOutputs('.outAbsSpl');
-        let __outsAbsRem = __getOutputs('.outAbsRem');
-        let __outsRelRem = __getOutputs('.outRelRem');
+        __outsEdit = __getOutputs('.outPaid');
+        __outsToSpl = __getOutputs('.outAbsSpl');
 
-        for(let editedIdx = 0; editedIdx <  __selectedCells.editableCells.length; editedIdx++){
+        for(let editedIdx = 0; editedIdx <  __selectedCells.colOfEditedCells.length; editedIdx++){
 
             //just check if there is a value to see if edited
             //if edited, calculate the corresponding differences
             //do nothing is not edited
-            if(__selectedCells.editableCells[editedIdx].value != ''){
-                __outsPaid[editedIdx].innerHTML = String(Math.ceil(__selectedCells.editableCells[editedIdx].value));
-                __outsAbsRem[editedIdx].innerHTML = String(Math.ceil(Number(__outsAbsSpl[editedIdx].innerHTML) - parseInt(__selectedCells.editableCells[editedIdx].value)));
-                __outsRelRem[editedIdx].innerHTML = String(Math.ceil((Number(__outsAbsSpl[editedIdx].innerHTML) - parseInt(__selectedCells.editableCells[editedIdx].value))*100/Number(__outsAbsSpl[editedIdx].innerHTML)));
+            if(__selectedCells.colOfEditedCells[editedIdx].value != ''){
+                __outsPaid[editedIdx].innerHTML = String(Math.ceil(__selectedCells.colOfEditedCells[editedIdx].value));
+                __outsAbsRem[editedIdx].innerHTML = String(Math.ceil(Number(__outsToSpl[editedIdx].innerHTML) - parseInt(__selectedCells.colOfEditedCells[editedIdx].value)));
+                __outsRelRem[editedIdx].innerHTML = String(Math.ceil((Number(__outsToSpl[editedIdx].innerHTML) - parseInt(__selectedCells.colOfEditedCells[editedIdx].value))*100/Number(__outsToSpl[editedIdx].innerHTML)));
             }
         }
+    }
+
+    //is the AbsSpl col edited?
+    if(__selectedCells.checkedColId == 'editAbsSpl'){
+        
+        //get output of AbsSplt
+        __outsEdit = __getOutputs('.outAbsSpl');
+        __outsToSpl = __getOutputs('.outRelSpl');
+        //update __updatedContrbs obj, __numberOfSplits and __sumNewSplit
+        __newContrAndSumSpltFunc(__outsEdit);
+
+        __absOrrelSplFunc(__selectedCells.checkedColId);
+
+    }
+    
+    //NOTICE that comments are very similar as for editAbsSpl, with a small difference at the moment of updating the values of the table...
+    if(__selectedCells.checkedColId == 'editRelSpl'){
+        
+        //get output of RelSplt
+        __outsEdit = __getOutputs('.outRelSpl');
+        __outsToSpl = __getOutputs('.outAbsSpl');        
+        //update __updatedContrbs obj, __numberOfSplits and __sumNewSplit
+        __newContrAndSumSpltFunc(__outsEdit);
+  
+        __absOrrelSplFunc(__selectedCells.checkedColId);
     }
 
     //reset all global variables to initial
@@ -469,7 +536,7 @@ let updateBtnFunc = function(){
         checkedColId: null,
         checkedRowIds: [],
         rowCount: -1,
-        editableCells: []
+        colOfEditedCells: []
     }
     
     __updatedContribs = {}
@@ -486,9 +553,102 @@ let updateBtnFunc = function(){
     let checkboxes = document.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
     radios.forEach((v,i)=>{if(v.checked){v.checked = false}});
     checkboxes.forEach((v,i)=>{if(v.checked){v.checked = false}});
-    __getEditables().forEach((v,i)=>{v.style.display = 'none'; v.value = '';});
+    __getEditables('.editable').forEach((v,i)=>{v.style.display = 'none'; v.value = '';});
+
+    const updateBtn = document.querySelector('#updateBtn') as HTMLFormElement;
+    const saveBtn = document.querySelector('#saveBtn') as HTMLFormElement;
+
+    if(updateBtn){
+        updateBtn.hidden = true;
+    }else{
+        throw('update button not found');
+    }
+
+    if(saveBtn){
+        saveBtn.hidden = false;
+    }else{
+        throw('save button not found');
+    }
+
+}
+
+let saveBtnFunc = function(){
+
+    const updateBtn = document.querySelector('#updateBtn') as HTMLFormElement;
+    const saveBtn = document.querySelector('#saveBtn') as HTMLFormElement;
+    const cancelBtn = document.querySelector('#cancelBtn') as HTMLFormElement;
+    
+    if(updateBtn){
+        updateBtn.hidden = true;
+    }else{
+        throw('update button not found');
+    }
+
+    if(saveBtn){
+        saveBtn.hidden = true;
+    }else{
+        throw('save button not found');
+    }
+
+    if(cancelBtn){
+        cancelBtn.hidden = true;
+    }else{
+        throw('cancel button not found');
+    }
+
+    alert('All the changes were saved!');
+
+}
 
 
+let cancelBtnFunc = function(){
+    //reset all global variables to initial
+    __selectedCells = {
+        checkedColId: null,
+        checkedRowIds: [],
+        rowCount: -1,
+        colOfEditedCells: []
+    }
+    
+    __updatedContribs = {}
+    for(let rcdIdIdx = 0; rcdIdIdx < __recordIds.length; rcdIdIdx++){
+        __updatedContribs[__recordIds[rcdIdIdx]] = {};
+    }
+
+    __numberOfSplits = 0;
+    __sumNewSplit = 0;
+
+    //reset all checked boxes and radios to unchecked
+    document.querySelectorAll('input[type="radio"]')
+    let radios = document.querySelectorAll('input[type="radio"]') as NodeListOf<HTMLInputElement>;
+    let checkboxes = document.querySelectorAll('input[type="checkbox"]') as NodeListOf<HTMLInputElement>;
+    radios.forEach((v,i)=>{if(v.checked){v.checked = false}});
+    checkboxes.forEach((v,i)=>{if(v.checked){v.checked = false}});
+    __getEditables('.editable').forEach((v,i)=>{v.style.display = 'none'; v.value = '';}); 
+
+    const updateBtn = document.querySelector('#updateBtn') as HTMLFormElement;
+    const saveBtn = document.querySelector('#saveBtn') as HTMLFormElement;
+    const cancelBtn = document.querySelector('#cancelBtn') as HTMLFormElement;
+    
+    if(updateBtn){
+        updateBtn.hidden = true;
+    }else{
+        throw('update button not found');
+    }
+
+    if(saveBtn){
+        saveBtn.hidden = true;
+    }else{
+        throw('update button not found');
+    }
+
+    if(cancelBtn){
+        cancelBtn.hidden = true;
+    }else{
+        throw('update button not found');
+    }
+
+    alert('All the changes were cancelled!');
 }
 
 window.onload = function(){

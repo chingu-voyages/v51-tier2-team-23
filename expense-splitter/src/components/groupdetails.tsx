@@ -48,14 +48,14 @@ const GroupDetails: React.FC = () => {
         </p>
         <div className="tab-container">
           <div className="tab-header">
-            <a
+            {/* <a
               className={`tab-item ${
                 activeTab === "participants" ? "tab-active" : "tab-inactive"
               }`}
               onClick={() => setActiveTab("participants")}
             >
               <p className="tab-text">Participants</p>
-            </a>
+            </a> */}
             <a
               className={`tab-item ${
                 activeTab === "expenses" ? "tab-active" : "tab-inactive"
@@ -91,7 +91,7 @@ const GroupDetails: React.FC = () => {
             ))
           // Ensure groupId is passed
         }
-        {
+        {/* {
           activeTab === "summary" &&
             (foundGroup ? (
               <Summary groupId={foundGroup.id} />
@@ -99,7 +99,7 @@ const GroupDetails: React.FC = () => {
               <p>Loading Summary...</p>
             ))
           // Ensure groupId is passed
-        }
+        } */}
       </div>
     </div>
   );

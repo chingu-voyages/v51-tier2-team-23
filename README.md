@@ -1,4 +1,4 @@
-# SPLITIT - Expenses Splitter app
+# SPLITTY - Expenses Splitter app
 
 **Overview**
 As part of Voyage 51 our team are creating an Expenses Splitter app to allow friends, families and groups to easily split and track expenses.

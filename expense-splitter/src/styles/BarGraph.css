@@ -1,0 +1,47 @@
+.bar-graph {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* Equivalent to gap-2 */
+    border-radius: 0.75rem; /* Equivalent to rounded-xl */
+    border: 1px solid #dce1e5; /* Equivalent to border-[#dce1e5] */
+    padding: 1.5rem; /* Equivalent to p-6 */
+    min-width: 18rem; /* Equivalent to min-w-72 */
+    background-color:  #B6CBE5;
+  }
+  
+  .title2 {
+    color: #000000;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+    text-transform: uppercase;/* Equivalent to leading-normal */
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: auto 1fr; /* Equivalent to grid-cols-[auto_1fr] */
+    gap: 1rem 1.5rem; /* Equivalent to gap-x-4 gap-y-6 */
+    min-height: 180px; /* Equivalent to min-h-[180px] */
+    padding-top: 0.75rem; /* Equivalent to py-3 */
+  }
+  
+  .category {
+    color: #647787; /* Equivalent to text-[#647787] */
+    font-size: 1rem; /* Equivalent to text-[13px] */
+    font-weight: bold; /* Equivalent to font-bold */
+    line-height: normal; /* Equivalent to leading-normal */
+    letter-spacing: 0.015em; /* Equivalent to tracking-[0.015em] */
+  }
+  
+  .bar-container {
+    height: 100%; /* Full height of the grid */
+    flex-grow: 1; /* Equivalent to flex-1 */
+  }
+  
+  .bar {
+    border-right: 2px solid #647787; /* Equivalent to border-r-2 and border-[#647787] */
+    background-color: #f0f2f4; /* Equivalent to bg-[#f0f2f4] */
+    height: 100%; /* Full height */
+  }
+  

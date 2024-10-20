@@ -1,0 +1,110 @@
+/* Import Poppins Font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Header Styling */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 70px;
+  border-bottom: 1px solid #e7edf3;
+  background-color: #f9fafb;
+  height: 3rem; /* Adjust height as needed */
+}
+
+/* Header Content */
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+/* Logo Section */
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Adjusted gap */
+}
+
+.logo-section svg {
+  width: 1.5rem; /* Adjust based on logo size */
+  height: 1.5rem; /* Adjust based on logo size */
+}
+
+.logo-text {
+  font-size: 1.125rem; /* Text size equivalent to lg */
+  font-weight: 600;
+  color: #0e141b;
+}
+
+/* Navigation Actions */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* Space between the nav links and the button */
+}
+
+/* Navigation Links */
+.nav-links {
+  display: flex;
+  gap: 1.5rem; /* Space between links */
+}
+
+.nav-link {
+  color: #0e141b;
+  font-size: 0.875rem; /* Equivalent to text-sm */
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #1d4ed8; /* Change link color to blue on hover */
+}
+
+/* New Group Button */
+.new-group-button {
+  background-color: #1980e6;
+  color: #f9fafb;
+  font-size: 0.875rem; /* Equivalent to text-sm */
+  font-family: 'Poppins', sans-serif; /* Apply Poppins to button */
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem; /* Equivalent to rounded-xl */
+  cursor: pointer;
+  height: 2.5rem; /* Equivalent to h-10 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover transition */
+}
+
+.new-group-button:hover {
+  background-color: #3b82f6; /* Lighter blue on hover */
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+.header.fixed {
+  position: fixed; /* Fix the header */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; /* Ensure it's above other content */
+}
+.nav-link.active-link {
+  color: #1d4ed8; /* Active link color */
+  font-weight: 700; /* Optional: Make active link bold */
+  text-decoration: solid; /* Optional: Underline active link */
+}

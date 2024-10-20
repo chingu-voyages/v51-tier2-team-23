@@ -1,0 +1,46 @@
+.line-graph {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Increased gap for better spacing */
+  border-radius: 0.75rem;
+  border: 1px solid #dce1e5;
+  padding: 2rem; /* More padding for a spacious feel */
+  min-width: 18rem;
+  background-color: #B6CBE5; /* Background color */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+
+.title1 {
+  color: #000000  ; /* Title color */
+  font-size: 1.5rem; /* Slightly larger font size */
+  font-weight: 700; /* Bold weight for emphasis */
+  line-height: 1.5;
+  text-align: center; /* Center align the title */
+  text-transform: uppercase; /* Make title uppercase for modern styling */
+}
+
+.graph-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-top: 1rem;
+  min-height: 220px; /* Sufficient height for better visibility */
+}
+
+.custom-tooltip {
+  background: #243240; /* Dark tooltip background */
+  color: #fff; /* White text for contrast */
+  padding: 12px; /* Increased padding */
+  border-radius: 8px; /* More rounded corners */
+  font-size: 1rem; /* Larger font size for better readability */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow for tooltip */
+}
+
+.tooltip-date {
+  font-weight: 600; /* Bold date for emphasis */
+}
+
+.tooltip-expense {
+  font-size: 1.2rem; /* Slightly larger font size for expense */
+  font-weight: 700; /* Bold weight for emphasis */
+}

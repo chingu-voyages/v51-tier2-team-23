@@ -1,0 +1,51 @@
+.card22 {
+    display: flex;
+    align-items: center; /* Equivalent to items-center */
+    gap: 1rem; /* Equivalent to gap-4 */
+ /* Equivalent to bg-white */
+    padding-left: 1rem; /* Equivalent to px-4 */
+    padding-right: 1rem; /* Equivalent to px-4 */
+    padding-top: 0.5rem; /* Equivalent to py-2 */
+    padding-bottom: 0.5rem; /* Equivalent to py-2 */
+    min-height: 72px; /* Equivalent to min-h-[72px] */
+  }
+  
+  .icon-container {
+    color: #111517; /* Equivalent to text-[#111517] */
+    display: flex;
+    align-items: center; /* Equivalent to items-center */
+    justify-content: center; /* Equivalent to justify-center */
+    border-radius: 0.5rem; /* Equivalent to rounded-lg */
+    background-color: #f0f2f4; /* Equivalent to bg-[#f0f2f4] */
+    flex-shrink: 0; /* Equivalent to shrink-0 */
+    width: 48px; /* Equivalent to size-12 (12 * 4px) */
+    height: 48px; /* Equivalent to size-12 (12 * 4px) */
+  }
+  
+  .text-container {
+    display: flex;
+    flex-direction: column; /* Equivalent to flex-col */
+    justify-content: center; /* Equivalent to justify-center */
+  }
+  
+  .title {
+    color: #111517; /* Equivalent to text-[#111517] */
+    font-size: 1rem; /* Equivalent to text-base */
+    font-weight: 500; /* Equivalent to font-medium */
+    line-height: normal; /* Equivalent to leading-normal */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; /* Equivalent to line-clamp-1 */
+  }
+  
+  .subtitle {
+    color: #647787; /* Equivalent to text-[#647787] */
+    font-size: 0.875rem; /* Equivalent to text-sm */
+    font-weight: normal; /* Equivalent to font-normal */
+    line-height: normal; /* Equivalent to leading-normal */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Equivalent to line-clamp-2 */
+  }
+  

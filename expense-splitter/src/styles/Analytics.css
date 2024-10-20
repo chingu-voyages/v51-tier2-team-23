@@ -1,0 +1,65 @@
+.dashboard  {
+  position: relative;
+  display: flex;
+  width: fit-content;
+  flex-direction: column; /* Equivalent to flex-col */
+  min-height: 100vh; /* Equivalent to min-h-screen */
+  background-color: #f8f9fa; /* Light background */
+  overflow-x: hidden; /* Equivalent to overflow-x-hidden */
+  font-family: 'Inter', 'Noto Sans', sans-serif;
+  margin-top: 2%; /* Custom font family */
+}
+  
+
+.dashboard-title {
+  font-size: 2rem; /* Larger font size for title */
+  font-weight: bold; /* Bold text */
+  color: #111517; /* Title color */
+  text-align: center; /* Center title */
+  margin: 2rem 0; /* Spacing around title */
+}
+
+.dashboard-subtitle {
+  font-size: 1.2rem; /* Slightly larger font for subtitle */
+  color: #6c757d; /* Subtitle color */
+  text-align: center; /* Center subtitle */
+  margin-bottom: 3rem; /* Spacing below subtitle */
+}
+
+.layout-container {
+  display: flex;
+  flex-grow: 1; /* Equivalent to grow */
+  flex-direction: column; /* Equivalent to flex-col */
+  height: 100%; /* Equivalent to h-full */
+}
+
+.content-container {
+  padding-left: 4rem; /* Equivalent to px-40 */
+  padding-right: 4rem; /* Equivalent to px-40 */
+  display: flex;
+  flex-direction: column; /* E  quivalent to flex-col */
+  flex-grow: 3; /* Equivalent to flex-1 */
+  justify-content: center; /* Equivalent to justify-center */
+  padding-top: 1.25rem; /* Equivalent to py-5 */
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Equivalent to grid-cols-3 */
+  gap: 1rem; /* Equivalent to gap-4 */
+}
+
+.graph-container {
+  display: grid;
+  grid-template-columns: 1fr; /* Equivalent to grid-cols-1 */
+  gap: 1rem; /* Equivalent to gap-4 */
+  margin-top: 1.25rem; /* Equivalent to mt-5 */
+}
+
+.graph-title {
+  font-size: 1.5rem; /* Larger font size for graph titles */
+  font-weight: bold; /* Bold text */
+  color: #111517; /* Title color */
+  margin-top: 2rem; /* Spacing above the graph title */
+  margin-bottom: 1rem; /* Spacing below the graph title */
+}

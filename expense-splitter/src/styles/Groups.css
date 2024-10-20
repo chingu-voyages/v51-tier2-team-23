@@ -1,0 +1,124 @@
+.group-list-container {
+  max-height: 650px; /* Set a maximum height for the container */
+  overflow-y: auto; /* Enable vertical scrolling when content overflows */
+  padding: 1rem; /* Add some padding */
+  border-radius: 0.5rem; /* Optional: rounded corners */
+}
+
+/* Scrollbar styles */
+.group-list-container::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+.group-list-container::-webkit-scrollbar-track {
+  background: #f0f0f0; /* Background of the scrollbar track */
+  border-radius: 6px; /* Rounded corners for the track */
+}
+
+.group-list-container::-webkit-scrollbar-thumb {
+  background: #c0c0c0; /* Color of the scrollbar thumb */
+  border-radius: 6px; /* Rounded corners for the thumb */
+}
+
+.group-list-container::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0; /* Color of the thumb on hover */
+}
+
+.group-card {
+  padding: 1rem; /* Equivalent to p-4 */
+}
+
+.card-content {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 1rem; /* Equivalent to gap-4 */
+  border-radius: 1rem; /* Equivalent to rounded-xl */
+}
+
+.text-section {
+  flex: 2; /* Equivalent to flex-[2_2_0px] */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Equivalent to gap-4 */
+}
+
+.text-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem; /* Equivalent to gap-1 */
+}
+
+.total-expenses {
+  color: #4e7397;
+  font-size: 0.875rem; /* Equivalent to text-sm */
+  font-weight: normal; /* Equivalent to font-normal */
+  line-height: normal; /* Equivalent to leading-normal */
+}
+
+.title {
+  color: #0e141b;
+  font-size: 1rem; /* Equivalent to text-base */
+  font-weight: bold; /* Equivalent to font-bold */
+  line-height: tight; /* Equivalent to leading-tight */
+}
+
+.amount-owed {
+  color: #4e7397;
+  font-size: 0.875rem; /* Equivalent to text-sm */
+  font-weight: normal; /* Equivalent to font-normal */
+  line-height: normal; /* Equivalent to leading-normal */
+}
+
+.button-section {
+  display: flex; /* Use flexbox to align buttons side by side */
+  gap: 10px; /* Space between the buttons */
+}
+
+.view-button {
+  display: flex;
+  min-width: 84px;
+  max-width: 480px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 1rem; /* Equivalent to rounded-xl */
+  height: 2rem; /* Equivalent to h-8 */
+  padding: 0 1rem; /* Equivalent to px-4 */
+  flex-direction: row-reverse; /* Equivalent to flex-row-reverse */
+  background-color: #e7edf3;
+  color: #0e141b;
+  font-size: 0.875rem; /* Equivalent to text-sm */
+  font-weight: medium; /* Equivalent to font-medium */
+  line-height: normal; /* Equivalent to leading-normal */
+  width: fit-content; /* Equivalent to w-fit */
+}
+
+.view-button:hover {
+  background-color: #d0d9df; /* Darker shade on hover for view button */
+}
+
+.image-section {
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  aspect-ratio: 16 / 9; /* Aspect ratio to keep the design */
+  background-size: cover;
+  border-radius: 1rem; /* Equivalent to rounded-xl */
+  flex: 1; /* Equivalent to flex-1 */
+}
+
+.delete-button {
+  background-color: red; /* Set the delete button background to red */
+  color: white; /* Keep the text color white */
+  border: none;
+  border-radius: 1rem; /* Match the border-radius with view button */
+  cursor: pointer;
+  padding: 0 1rem; /* Match padding with view button */
+  height: 2rem; /* Match height with view button */
+}
+
+.delete-button:hover {
+  background-color: darkred; /* Darker shade on hover for delete button */
+}

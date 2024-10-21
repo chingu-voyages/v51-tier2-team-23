@@ -11,6 +11,10 @@
 
 ![](/resources/img/sketchCalc02.gif)
 
+__Left unfinished__
+
+* CANCEL button didn't restore the table to the original values
+
 ////////////////////////////////////
 
 ///////////////////////////////////
